@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/tx
+            http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+            http://www.springframework.org/schema/aop
+            http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+    
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+   		<property name="dataSource" ref="dataSource"></property>
+	    	<!-- 1.1确定文件位置 -->
+	    <property name="configLocation" value="classpath:hibernate/hibernate.cfg.xml"/>
+	    	<!-- 1.2配置hbm.xml映射文件，mappingDirectoryLocationd表示本地映射文件的目录 -->
+	    <property name="mappingDirectoryLocations" value="classpath:cn/itcast/erp/*/*/vo"/>
+	</bean>
+	
+			<!-- 配置数据源 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="com.mysql.jdbc.Driver"/>
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/erpdb"/>
+		<property name="user" value="root"/>
+		<property name="password" value="root"/>
+		<property name="maxPoolSize" value="20"/>
+		<property name="minPoolSize" value="5"/>
+		<property name="autoCommitOnClose" value="false"/>
+		<property name="checkoutTimeout" value="10000"/>
+		<property name="acquireRetryAttempts" value="2"/>
+	</bean>
+	
+		<!--配置HibernateTemplate-->
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
+    	<!-- spring事务 -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+		<!-- spring-aop -->
+	<aop:config proxy-target-class="true">
+		<aop:pointcut id="myPointcut" expression="execution(* com.itcast.*.service.*.*(..))"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="myPointcut"/>
+	</aop:config>
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="get*" read-only="true"/>
+			<tx:method name="do*"/>
+		</tx:attributes>
+	</tx:advice>
+</beans>

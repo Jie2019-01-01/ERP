@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+    <!-- 开发模式 -->
+    <constant name="struts.decMode" value="true" />
+    <!-- 把主题配置成simple -->
+    <constant name="struts.ui.theme" value="simple" />
+    
+    <package name="default" namespace="/" extends="struts-default">
+    	
+    	<interceptors>
+    		<interceptor name="exceptionInterceptor" class="cn.itcast.erp.auth.interceptor.ExceptionInterceptior"/>
+    		<interceptor-stack name="myStack">
+    			<interceptor-ref name="exceptionInterceptor"/>
+    			<interceptor-ref name="defaultStack"/>
+    		</interceptor-stack>
+    	</interceptors>
+    	<default-interceptor-ref name="myStack"/>
+    
+    	<global-results>
+    			<!-- 捕获appException返回的页面 -->
+    		<result name="appException">/WEB-INF/jsps/error.jsp</result>
+    	</global-results>
+    	
+    		<!-- 进入登录页面 -->
+    	<action name="page_login">
+    		<result>/WEB-INF/jsps/login.jsp</result>
+    	</action>
+    		
+    		<!-- emp -->
+    	<action name="emp_*" class="empAction" method="{1}">
+    		<result name="loginSuccess">/WEB-INF/jsps/main.jsp</result>
+    		<result name="loginFail">/WEB-INF/jsps/login.jsp</result>
+    		<result name="toLogin">/WEB-INF/jsps/login.jsp</result>
+    	</action>
+    	
+    		<!-- dep -->
+    	<action name="dep_*" class="depAction" method="{1}">
+    		<result name="list">/WEB-INF/jsps/dep/{1}.jsp</result>
+    		<result name="input">/WEB-INF/jsps/dep/{1}.jsp</result>
+    		<result name="toList" type="redirectAction">dep_list</result>
+    	</action>
+    	
+    </package>
+</struts>

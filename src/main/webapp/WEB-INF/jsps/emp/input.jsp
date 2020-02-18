@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags"%>
-<link href="../../css/index.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="../../js/jquery-1.8.3.js"></script>
-<script type="text/javascript" src="../../js/Calendar.js"></script>
+<link href="css/index.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.8.3.js"></script>
+<script type="text/javascript" src="js/Calendar.js"></script>
 <script type="text/javascript">
 	$(function() {
 		$("#all").click(function() {
@@ -24,7 +24,8 @@
 	</div>
 	<div class="content-text">
 		<div class="square-order">
-			<form action="list.jsp" method="post"> 
+			<s:form action="emp_saveOrUpdate.action" method="post"> 
+			<s:hidden name="em.uuid"/>
   			<div style="border:1px solid #cecece;">
 				<table width="100%"  border="0" cellpadding="0" cellspacing="0">
 				  <tr bgcolor="#FFFFFF">
@@ -35,11 +36,11 @@
 				    <tr  bgcolor="#FFFFFF">
 				      <td width="18%" height="30" align="center">用&nbsp;户&nbsp;名</td>
 				      <td width="32%">
-				      	<input type="text" size="25"/>
+				      	<s:textfield name="em.userName" size="25"/>
 				      </td>
 				      <td width="18%"align="center">真实姓名</td>
 				      <td width="32%">
-				      	<input type="text" size="25"/>
+				      	<s:textfield name="em.realName" size="25"/>
 					  </td>
 				    </tr>
 				    <tr bgcolor="#FFFFFF">
@@ -48,7 +49,7 @@
 				    <tr  bgcolor="#FFFFFF">
 				      <td align="center">密&nbsp;&nbsp;&nbsp;&nbsp;码</td>
 				      <td>
-				      	<input type="text" size="25"/>
+				      	<s:textfield name="em.pwd" size="25"/>
 				      </td>
 				      <td  align="center">确认密码</td>
 				      <td >
@@ -61,10 +62,10 @@
 				    <tr  bgcolor="#FFFFFF">
 				      <td height="30" align="center">电子邮箱</td>
 				      <td>
-				      	<input type="text" size="25"/>
+				      	<s:textfield name="em.email" size="25"/>
 				      <td align="center">电话号码</td>
 				      <td>
-				      	<input type="text" size="25"/>
+				      	<s:textfield name="em.tele" size="25"/>
 					  </td>
 				     </tr>
 				      <tr bgcolor="#FFFFFF">
@@ -73,15 +74,11 @@
 				    <tr  bgcolor="#FFFFFF">
 				      <td height="30" align="center">性&nbsp;&nbsp;&nbsp;&nbsp;别</td>
 				      <td>
-				      	<select style="width:190px">
-								<option value="-1">----请-选-择----</option>
-								<option value="1">男</option>
-								<option value="0">女</option>
-							</select>
+				      	<s:select name="em.gender" list="@cn.itcast.erp.auth.emp.vo.EmpModel@genderMap"/>
 					  </td>
 				      <td align="center">地&nbsp;&nbsp;&nbsp;&nbsp;址</td>
 				      <td>
-				      	<input type="text" size="25"/>
+				      	<s:textfield name="em.address"/>
 					  </td>
 				    </tr>
 				     <tr bgcolor="#FFFFFF">
@@ -90,15 +87,12 @@
 				    <tr  bgcolor="#FFFFFF">
 				      <td height="30" align="center">出生日期</td>
 				      <td>
-				      	<input type="text" size="25" onfocus="c.showMoreDay=false;c.show(this);" readonly="true"/>
+				      	<input type="text" name="birthDay" size="25" onfocus="c.showMoreDay=false;c.show(this);" 
+				      		readonly="true" value="${em.birthView}"/>
 					  </td>
 				      <td align="center">所属部门</td>
 				      <td>
-				      	<select style="width:190px">
-							<option value="-1">----请-选-择----</option>
-							<option value="1">销售部</option>
-							<option value="2">采购部</option>
-						</select>
+				      	<s:select name="em.dm.uuid" cssStyle="width:190px" list="depList" listKey="uuid" listValue="depName"/>
 					  </td>
 				    </tr>
 				    <tr  bgcolor="#FFFFFF">
@@ -135,18 +129,18 @@
 					<table width="100%"  border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td>
-					    	<a href="javascript:document.forms[0].submit()"><img src="../../images/order_tuo.gif" border="0" /></a>
+					    	<a href="javascript:document.forms[0].submit()"><img src="images/order_tuo.gif" border="0" /></a>
 					    </td>
 					    <td>&nbsp;</td>
-					    <td><a href="#"><img src="../../images/order_tuo.gif" border="0" /></a></td>
+					    <td><a href="#"><img src="images/order_tuo.gif" border="0" /></a></td>
 					    <td>&nbsp;</td>
-					    <td><a href="#"><img src="../../images/order_tuo.gif" border="0" /></a></td>
+					    <td><a href="#"><img src="images/order_tuo.gif" border="0" /></a></td>
 					  </tr>
 					</table>
 				</div>
 			</div>
-			</form>
+			</s:form>
 		</div><!--"square-order"end-->
 	</div><!--"content-text"end-->
-	<div class="content-bbg"><img src="../../images/content_bbg.jpg" /></div>
+	<div class="content-bbg"><img src="images/content_bbg.jpg" /></div>
 </div>

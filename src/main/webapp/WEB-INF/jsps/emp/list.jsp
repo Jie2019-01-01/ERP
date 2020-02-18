@@ -7,7 +7,7 @@
 <script type="text/javascript">
 	$(function() {
 		$("#query").click(function() {
-			$("[name='pageNum']").val(1);
+			$("[name='curPage']").val(1);
 			$("form:first").submit();
 		});
 	});
@@ -15,7 +15,7 @@
 		//top.document.getElementById("context-msg").style.display = "block";
 		top.$('context-msg').style.display = "block";
 		top.$('context-msg-text').innerHTML=msg;
-		top.$('hid-action').value="actionName";
+		top.$('hid-action').value="emp_delete.action?em.uuid="+uuid;
 		top.lock.show();
 	}
 </script>
@@ -26,46 +26,44 @@
 		</div>
 	</div>
 	<div class="content-text">
-		<form action="list.jsp" method="post">
+		<s:form action="emp_list.action" method="post">
 			<div class="square-o-top">
 				<table width="100%" border="0" cellpadding="0" cellspacing="0"
 					style="font-size:14px; font-weight:bold; font-family:"黑体";">
 					<tr>
 						<td height="30">用&nbsp;户&nbsp;名</td>
-						<td><input type="text" size="14" /></td>
+						<td><s:textfield name="eqm.userName" size="14"/></td>
 						<td>真实姓名</td>
-						<td><input type="text" size="14" /></td>
+						<td><s:textfield name="eqm.realName" size="14"/></td>
 						<td>电&nbsp;&nbsp;&nbsp;&nbsp;话</td>
-						<td><input type="text" size="14" /></td>
+						<td><s:textfield name="eqm.tele" size="14"/></td>
 						<td>性&nbsp;&nbsp;&nbsp;&nbsp;别</td>
 						<td>
-							<select class="kuan">
-								<option value="-1">----请-选-择----</option>
-								<option value="1">男</option>
-								<option value="0">女</option>
-							</select>
+							<s:select name="eqm.gender" cssClass="kuan" list="@cn.itcast.erp.auth.emp.vo.EmpModel@genderMap" 
+								headerKey="-1" headerValue="----请-选-择----"/>
 						</td>
 							
-						<td width="70"><a href="input.jsp"> <img src="images/can_b_02.gif" border="0" /> </a></td>
+						<td width="70"><a href="emp_input.action"> <img src="images/can_b_02.gif" border="0" /> </a></td>
 					</tr>
 					<tr>
 						<td  height="30">电子邮件</td>
-						<td><input type="text" size="14" /></td>
-						<td>登录时间</td>
+						<td><s:textfield name="eqm.email" size="14"/></td>
+						<td>开始日期</td>
 						<td>
-							<input type="text"  size="14" onfocus="c.showMoreDay=false;c.show(this);" readonly="true"/>
+							<input type="text" value="${eqm.birthView}" size="14" onfocus="c.showMoreDay=false;c.show(this);" 
+								readonly="true"/>
+							<s:hidden name="eqm.birth"/>
 						</td>
-						<td>登录时间</td>
+						<td>结束日期</td>
 						<td>
-							<input type="text" size="14" onfocus="c.showMoreDay=false;c.show(this);" readonly="true"/>
+							<input type="text" value="${eqm.maxBirthView}" size="14" onfocus="c.showMoreDay=false;c.show(this);" 
+								readonly="true"/>
+							<s:hidden name="eqm.maxBirth"/>
 						</td>
 						<td>部门名称</td>
 						<td>
-							<select class="kuan">
-								<option value="-1">----请-选-择----</option>
-								<option value="1">销售部</option>
-								<option value="2">采购部</option>
-							</select>
+							<s:select name="eqm.dm.uuid" cssClass="kuan" list="depList" headerKey="-1" 
+								headerValue="----请-选-择----" listKey="uuid" listValue="depName"/>
 						</td>
 						<td><a id="query"> <img src="images/can_b_01.gif" border="0" /> </a></td>
 					</tr>
@@ -99,18 +97,22 @@
 							<td>
 								<img src="images/icon_3.gif" /> 
 								<span style="line-height:12px; text-align:center;"> 
-									<a href="./input.jsp" class="xiu">修改</a>
+									<s:a action="emp_input.action" cssClass="xiu">
+										修改
+										<s:param name="em.uuid" value="uuid"/>
+									</s:a>
 								</span> 
 								<img src="images/icon_04.gif" /> 
 								<span style="line-height:12px; text-align:center;"> 
-									<a href="javascript:void(0)" class="xiu" onclick="showMsg('是否删除该项数据？',318)">删除</a>
+									<a href="javascript:void(0)" class="xiu" onclick="showMsg('是否删除该项数据？',${uuid})">删除</a>
 								</span>
 							</td>
 						</tr>
 					</s:iterator>
 				</table>
+				<s:include value="../tools/paging.jsp"/>
 			</div>
-		</form>
+		</s:form>
 	</div>
 	<div class="content-bbg"></div>
 </div>

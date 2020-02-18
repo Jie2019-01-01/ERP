@@ -35,6 +35,7 @@ public class FormatUtil {
 	}
 	
 	public static void main(String[] args) {
-		System.out.println(formatMonmey(0.5));
+//		System.out.println(formatMonmey(0.5));
+		System.out.println(formatDate("1996-05-30"));
 	}
 }

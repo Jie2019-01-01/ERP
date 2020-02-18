@@ -12,8 +12,10 @@
     	
     	<interceptors>
     		<interceptor name="exceptionInterceptor" class="cn.itcast.erp.auth.interceptor.ExceptionInterceptior"/>
+    		<interceptor name="loginInterceptor" class="cn.itcast.erp.auth.interceptor.LoginInterceptor"/>
     		<interceptor-stack name="myStack">
     			<interceptor-ref name="exceptionInterceptor"/>
+    			<interceptor-ref name="loginInterceptor"/>
     			<interceptor-ref name="defaultStack"/>
     		</interceptor-stack>
     	</interceptors>
@@ -22,6 +24,7 @@
     	<global-results>
     			<!-- 捕获appException返回的页面 -->
     		<result name="appException">/WEB-INF/jsps/error.jsp</result>
+    		<result name="toLogin">/WEB-INF/jsps/login.jsp</result>
     	</global-results>
     	
     		<!-- 进入登录页面 -->
@@ -33,7 +36,7 @@
     	<action name="emp_*" class="empAction" method="{1}">
     		<result name="loginSuccess">/WEB-INF/jsps/main.jsp</result>
     		<result name="loginFail">/WEB-INF/jsps/login.jsp</result>
-    		<result name="toLogin">/WEB-INF/jsps/login.jsp</result>
+    		<result name="list">/WEB-INF/jsps/emp/{1}.jsp</result>
     	</action>
     	
     		<!-- dep -->

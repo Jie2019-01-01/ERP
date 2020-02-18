@@ -14,4 +14,9 @@ public class EmpImpl extends HibernateDaoSupport implements EmpDao {
 		return empList.size()>0? empList.get(0): null;
 	}
 
+	public List<EmpModel> list() {
+		String hql = "from EmpModel";
+		return this.getHibernateTemplate().find(hql);
+	}
+
 }

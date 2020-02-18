@@ -1,5 +1,7 @@
 package cn.itcast.erp.auth.emp.action;
 
+import java.util.List;
+
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import cn.itcast.erp.auth.emp.business.ebi.EmpEbi;
@@ -34,5 +36,12 @@ public class EmpAction extends ActionSupport{
 	public String logout() {
 		ActionContext.getContext().getSession().put(EmpModel.EMP_LOGIN_OF_INFO, null);
 		return "toLogin";
+	}
+	
+	// 列表
+	public String list() {
+		List<EmpModel> empList = empEbi.list();
+		ActionContext.getContext().put("empList", empList);
+		return "list";
 	}
 }

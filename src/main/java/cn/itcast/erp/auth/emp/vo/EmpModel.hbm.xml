@@ -7,9 +7,19 @@
 		<id name="uuid">
 			<generator class="native"/>
 		</id>
+		
 		<property name="userName"/>
-		<property name="realName"/>
 		<property name="pwd"/>
-		<property name="age"/>
+		<property name="realName"/>
+		<property name="email"/>
+		<property name="tele"/>
+		<property name="address"/>
+		<property name="gender"/>
+		<property name="birth"/>
+		<property name="lastLoginTime"/>
+		
+		<many-to-one name="dm" column="depUuid" class="cn.itcast.erp.auth.dep.vo.DepModel"/>
 	</class>
+
+	
 </hibernate-mapping>

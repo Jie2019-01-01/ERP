@@ -19,9 +19,14 @@ public class LoginInterceptor extends AbstractInterceptor {
 			invocation.invoke();
 		}
 		// 包名+方法名可以确定访问的是登录action
-		String actionName = invocation.getProxy().getActionName();
-		Object action = invocation.getProxy().getAction();
+		// action全限定名
+		String actionClassName = invocation.getAction().getClass().getName();
+		// 方法名
 		String method = invocation.getProxy().getMethod();
+		String allName = actionClassName + "." + method;
+		if("cn.itcast.erp.auth.emp.action.EmpAction.login".equals(allName)) {
+			invocation.invoke();
+		}
 		return "toLogin";
 	}
 

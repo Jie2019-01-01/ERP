@@ -17,7 +17,7 @@ public class DepAction extends ActionSupport{
 	public DepModel dm = new DepModel();
 	public DepQueryModel dqm = new DepQueryModel();
 	public Integer curPage = 1;	// 当前页
-	public Integer pageCount = 3; // 每页显示数量
+	public Integer pageCount = 10; // 每页显示数量
 	public Integer totalRecords; // 总记录数
 	public Integer lastPage; // 最后一页
 

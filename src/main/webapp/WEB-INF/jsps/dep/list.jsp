@@ -24,7 +24,10 @@
 		</div>
 	</div>
 	<div class="content-text">
-		<form action="list.jsp" method="post">
+		<s:form action="dep_list.action" method="post">
+		
+			<s:hidden name="curPage"/>
+			
 			<div class="square-o-top">
 				<table width="100%" border="0" cellpadding="0" cellspacing="0"
 					style="font-size:14px; font-weight:bold; font-family:"黑体";">
@@ -32,9 +35,9 @@
 						<td width="68" height="30">&nbsp;&nbsp;&nbsp;</td>
 						<td width="123">&nbsp;</td>
 						<td width="62">部门名称:</td>
-						<td width="142"><input type="text" size="18" /></td>
+						<td width="142"><s:textfield name="dqm.depName" size="18"/></td>
 						<td width="60">电话:</td>
-						<td width="149"><input type="text" size="18" /></td>
+						<td width="149"><s:textfield name="dqm.tele" size="18"/></td>
 						<td width="70"><a id="query"> <img src="images/can_b_01.gif" border="0" /> </a></td>
 						<td width="70"><a href="dep_input.action"><img src="images/can_b_02.gif" border="0" /> </a></td>
 					</tr>
@@ -80,7 +83,7 @@
 					<table width="100%" border="0" cellpadding="0" cellspacing="0">
 						<tr>
 							<td width="51%">&nbsp;</td>
-							<td width="13%">共24条记录
+							<td width="13%">共${totalRecords}条记录
 							<td width="6%">
 								<a id="fir" class="sye">首&nbsp;&nbsp;页</a>
 							</td>
@@ -93,12 +96,47 @@
 							<td width="6%">
 								<a id="last" class="sye">末&nbsp;&nbsp;页</a>
 							</td>
-							<td width="12%">当前第<span style="color:red;">1</span>/3页</td>
+							<td width="12%">当前第<span style="color:red;">${curPage}</span>/${lastPage}页</td>
 						</tr>
 					</table>
 				</s:else>
 			</div>
-		</form>
+		</s:form>
 	</div>
 	<div class="content-bbg"></div>
+	<script type="text/javascript">
+		$(function(){
+			var $curPage = ${curPage};
+			var $lastPage = ${lastPage};
+			// 根据页数显示或隐藏按钮
+			if($curPage==1){
+				$('#fir').css('display','none');
+				$('#pre').css('display','none');
+			}
+			if($curPage==$lastPage){
+				$('#last').css('display','none');
+				$('#next').css('display','none');
+			}
+			// 首页
+			$('#fir').click(function(){
+				$('[name=curPage]').val(1);
+				$("form:first").submit();
+			});
+			// 尾页
+			$('#last').click(function(){
+				$('[name=curPage]').val($lastPage);
+				$("form:first").submit();
+			});
+			// 下一页
+			$('#next').click(function(){
+				$('[name=curPage]').val($curPage*1+1);
+				$("form:first").submit();
+			});
+			// 上一页
+			$('#pre').click(function(){
+				$('[name=curPage]').val($curPage-1);
+				$("form:first").submit();
+			});
+		});
+	</script>
 </div>

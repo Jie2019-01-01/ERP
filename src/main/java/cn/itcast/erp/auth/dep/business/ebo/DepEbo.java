@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.itcast.erp.auth.dep.business.ebi.DepEbi;
 import cn.itcast.erp.auth.dep.dao.dao.DepDao;
 import cn.itcast.erp.auth.dep.vo.DepModel;
+import cn.itcast.erp.auth.dep.vo.DepQueryModel;
 import cn.itcast.erp.auth.exception.AppException;
 
 @Transactional
@@ -45,6 +46,26 @@ public class DepEbo implements DepEbi {
 
 	public void delete(DepModel dm) {
 		depDao.delete(dm);
+	}
+
+
+	public Integer getCount() {
+		return depDao.getCount();
+	}
+
+
+	public List<DepModel> list(Integer curPage, Integer pageCount) {
+		return depDao.list(curPage, pageCount);
+	}
+
+
+	public List<DepModel> list(DepQueryModel dqm, Integer curPage, Integer pageCount) {
+		return depDao.list(dqm,curPage, pageCount);
+	}
+
+
+	public Integer getCount(DepQueryModel dqm) {
+		return depDao.getCount(dqm);
 	}
 
 }

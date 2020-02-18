@@ -16,6 +16,9 @@ public class ExceptionInterceptior extends AbstractInterceptor{
 		}catch(AppException e) {
 			ActionContext.getContext().put("msg", e.getMessage());
 			return "appException";
+		}catch(Exception e) {
+			e.printStackTrace();
+			return invocation.invoke();
 		}
 	}
 

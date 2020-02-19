@@ -25,9 +25,6 @@
 	</div>
 	<div class="content-text">
 		<s:form action="dep_list.action" method="post">
-		
-			<s:hidden name="curPage"/>
-			
 			<div class="square-o-top">
 				<table width="100%" border="0" cellpadding="0" cellspacing="0"
 					style="font-size:14px; font-weight:bold; font-family:"黑体";">
@@ -38,7 +35,7 @@
 						<td width="142"><s:textfield name="dqm.depName" size="18"/></td>
 						<td width="60">电话:</td>
 						<td width="149"><s:textfield name="dqm.tele" size="18"/></td>
-						<td width="70"><a id="query"> <img src="images/can_b_01.gif" border="0" /> </a></td>
+						<td width="70"><a id="query"> <img src="images/can_b_01.gif" border="0" /></a></td>
 						<td width="70"><a href="dep_input.action"><img src="images/can_b_02.gif" border="0" /> </a></td>
 					</tr>
 				</table>

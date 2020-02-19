@@ -1,13 +1,12 @@
 package cn.itcast.erp.auth.dep.action;
 
 import java.util.List;
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionSupport;
 import cn.itcast.erp.auth.dep.business.ebi.DepEbi;
 import cn.itcast.erp.auth.dep.vo.DepModel;
 import cn.itcast.erp.auth.dep.vo.DepQueryModel;
+import cn.itcast.erp.utils.base.BaseAction;
 
-public class DepAction extends ActionSupport{
+public class DepAction extends BaseAction{
 
 	private static final long serialVersionUID = -4760804136155553658L;
 
@@ -16,20 +15,13 @@ public class DepAction extends ActionSupport{
 	
 	public DepModel dm = new DepModel();
 	public DepQueryModel dqm = new DepQueryModel();
-	public Integer curPage = 1;	// 当前页
-	public Integer pageCount = 10; // 每页显示数量
-	public Integer totalRecords; // 总记录数
-	public Integer lastPage; // 最后一页
 
 	// 部门列表
 	public String list() {
-		// 获取总条目
-		totalRecords = depEbi.getCount(dqm);
-		// 计算最后一页
-		lastPage = (totalRecords-1)/pageCount+1;
+		setRecords(depEbi.getCount(dqm));
 		// 分页查找
 		List<DepModel> depList = depEbi.list(dqm, curPage, pageCount);
-		ActionContext.getContext().put("depList", depList);
+		put("depList", depList);
 		return "list";
 	}
 	

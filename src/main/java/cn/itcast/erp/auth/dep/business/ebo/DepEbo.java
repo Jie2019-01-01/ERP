@@ -5,8 +5,8 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.itcast.erp.auth.dep.business.ebi.DepEbi;
 import cn.itcast.erp.auth.dep.dao.dao.DepDao;
 import cn.itcast.erp.auth.dep.vo.DepModel;
-import cn.itcast.erp.auth.dep.vo.DepQueryModel;
-import cn.itcast.erp.auth.exception.AppException;
+import cn.itcast.erp.exception.AppException;
+import cn.itcast.erp.utils.base.BaseQueryModel;
 
 @Transactional
 public class DepEbo implements DepEbi {
@@ -14,11 +14,9 @@ public class DepEbo implements DepEbi {
 	private DepDao depDao;
 	public void setDepDao(DepDao depDao) {this.depDao = depDao;}
 
-
 	public List<DepModel> list() {
 		return depDao.list();
 	}
-
 
 	public void save(DepModel dm) {
 		// 逻辑校验：部门名称和电话不能为空(正常情况应该用正则来匹配)
@@ -33,39 +31,24 @@ public class DepEbo implements DepEbi {
 		depDao.save(dm);
 	}
 
-
 	public void update(DepModel dm) {
 		depDao.update(dm);
 	}
-
 
 	public DepModel getByUuid(Long uuid) {
 		return depDao.getByUuid(uuid);
 	}
 
-
 	public void delete(DepModel dm) {
 		depDao.delete(dm);
 	}
 
-
-	public Integer getCount() {
-		return depDao.getCount();
+	public List<DepModel> list(BaseQueryModel bqm, Integer curPage, Integer pageCount) {
+		return depDao.list(bqm,curPage, pageCount);
 	}
 
-
-	public List<DepModel> list(Integer curPage, Integer pageCount) {
-		return depDao.list(curPage, pageCount);
-	}
-
-
-	public List<DepModel> list(DepQueryModel dqm, Integer curPage, Integer pageCount) {
-		return depDao.list(dqm,curPage, pageCount);
-	}
-
-
-	public Integer getCount(DepQueryModel dqm) {
-		return depDao.getCount(dqm);
+	public Integer getCount(BaseQueryModel cqm) {
+		return depDao.getCount(cqm);
 	}
 
 }

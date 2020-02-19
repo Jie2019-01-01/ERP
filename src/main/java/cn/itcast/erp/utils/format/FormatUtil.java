@@ -1,4 +1,4 @@
-package cn.itcast.erp.auth.utils.format;
+package cn.itcast.erp.utils.format;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

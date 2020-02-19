@@ -1,10 +1,11 @@
-package cn.itcast.erp.auth.interceptor;
+package cn.itcast.erp.interceptor;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
-import cn.itcast.erp.auth.exception.AppException;
+
+import cn.itcast.erp.exception.AppException;
 
 public class ExceptionInterceptior extends AbstractInterceptor{
 

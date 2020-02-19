@@ -1,4 +1,4 @@
-package cn.itcast.erp.auth.exception;
+package cn.itcast.erp.exception;
 
 public class AppException extends RuntimeException {
 

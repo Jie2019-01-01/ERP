@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags"%>
-<link href="../../css/index.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="../../js/jquery-1.8.3.js"></script>
-<script type="text/javascript" src="../../js/Calendar.js"></script>
+<link href="css/index.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.8.3.js"></script>
+<script type="text/javascript" src="js/Calendar.js"></script>
 <script type="text/javascript">
 	$(function() {
 		$("#query").click(function() {
-			$("[name='pageNum']").val(1);
+			$("[name='curPage']").val(1);
 			$("form:first").submit();
 		});
 	});
@@ -15,7 +15,7 @@
 		//top.document.getElementById("context-msg").style.display = "block";
 		top.$('context-msg').style.display = "block";
 		top.$('context-msg-text').innerHTML=msg;
-		top.$('hid-action').value="actionName";
+		top.$('hid-action').value="res_delete.action?rm.uuid="+uuid;
 		top.lock.show();
 	}
 </script>
@@ -26,14 +26,14 @@
 		</div>
 	</div>
 	<div class="content-text">
-		<form action="list.jsp" method="post">
+		<s:form action="res_list.action" method="post">
 			<div class="square-o-top">
 				<table width="100%" border="0" cellpadding="0" cellspacing="0"
 					style="font-size:14px; font-weight:bold; font-family:"黑体";">
 					<tr>
 						<td width="68" height="30">资源名称</td>
-						<td width="123"><input type="text" size="18" /></td>
-						<td width="62">资源类别</td>
+						<td width="123"><s:textfield name="rqm.resName" size="18" /></td>
+						<td width="62">XXXX</td>
 						<td width="142">
 							<select class="kuan">
 								<option value="-1">----请-选-择----</option>
@@ -41,7 +41,7 @@
 								<option value="2">action访问</option>
 							</select>
 						</td>
-						<td width="60">操作类别</td>
+						<td width="60">XXXX</td>
 						<td width="149">
 							<select class="kuan">
 								<option value="-1">----请-选-择----</option>
@@ -49,8 +49,8 @@
 								<option value="2">可视</option>
 							</select>
 						</td>
-						<td width="70"><a id="query"> <img src="../../images/can_b_01.gif" border="0" /> </a></td>
-						<td width="70"><a href="./input.jsp"><img src="../../images/can_b_02.gif" border="0" /></a></td>
+						<td width="70"><a id="query"> <img src="images/can_b_01.gif" border="0" /> </a></td>
+						<td width="70"><a href="res_input.action"><img src="images/can_b_02.gif" border="0" /></a></td>
 					</tr>
 				</table>
 			</div>
@@ -58,32 +58,34 @@
 			<div class="square-order">
 				<table width="100%" border="1" cellpadding="0" cellspacing="0">
 					<tr align="center"
-						style="background:url(../../images/table_bg.gif) repeat-x;">
+						style="background:url(images/table_bg.gif) repeat-x;">
 						<td height="30">资源名称</td>
-						<td>资源类别</td>
-						<td>操作类别</td>
 						<td>资源值</td>
 						<td width="16%">操作</td>
 					</tr>
-					<tr align="center" bgcolor="#FFFFFF">
-						<td width="13%" height="30">添加/修改员工信息</td>
-						<td>action访问</td>
-						<td>可访问</td>
-						<td align="left">cn.itcast.invoice.auto.employee.web.EmployeeAction.input</td>
-						<td>
-							<img src="../../images/icon_3.gif" /> 
-							<span style="line-height:12px; text-align:center;"> 
-								<a href="./input.jsp" class="xiu">修改</a>
-							</span> 
-							<img src="../../images/icon_04.gif" /> 
-							<span style="line-height:12px; text-align:center;"> 
-								<a href="javascript:void(0)" class="xiu" onclick="showMsg('是否删除该项数据？',318)">删除</a>
-							</span>
-						</td>
-					</tr>
+					<s:iterator value="resList">
+						<tr align="center" bgcolor="#FFFFFF">
+							<td width="20%" height="30">${resName }</td>
+							<td align="center">${resValue }</td>
+							<td>
+								<img src="images/icon_3.gif" /> 
+								<span style="line-height:12px; text-align:center;"> 
+									<s:a action="res_input.action" cssClass="xiu">
+										修改
+										<s:param name="rm.uuid" value="uuid"/>
+									</s:a>
+								</span> 
+								<img src="images/icon_04.gif" /> 
+								<span style="line-height:12px; text-align:center;"> 
+									<a href="javascript:void(0)" class="xiu" onclick="showMsg('是否删除该项数据？',${uuid})">删除</a>
+								</span>
+							</td>
+						</tr>
+					</s:iterator>
 				</table>
+				<s:include value="../tools/paging.jsp"/>
 			</div>
-		 </form>
+		 </s:form>
 	</div>
 	<div class="content-bbg"></div>
 </div>

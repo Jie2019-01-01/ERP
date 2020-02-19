@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags"%>
-<link href="css/index.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="js/jquery-1.8.3.js"></script>
-<script type="text/javascript" src="js/Calendar.js"></script>
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../js/jquery-1.8.3.js"></script>
+<script type="text/javascript" src="../../js/Calendar.js"></script>
 <script type="text/javascript">
 	$(function() {
 		$("#all").click(function() {
@@ -82,12 +82,12 @@
 					<table width="100%"  border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td>
-					    	<a href="javascript:document.forms[0].submit()"><img src="images/order_tuo.gif" border="0" /></a>
+					    	<a href="javascript:document.forms[0].submit()"><img src="../../images/order_tuo.gif" border="0" /></a>
 					    </td>
 					    <td>&nbsp;</td>
-					    <td><a href="#"><img src="images/order_tuo.gif" border="0" /></a></td>
+					    <td><a href="#"><img src="../../images/order_tuo.gif" border="0" /></a></td>
 					    <td>&nbsp;</td>
-					    <td><a href="#"><img src="images/order_tuo.gif" border="0" /></a></td>
+					    <td><a href="#"><img src="../../images/order_tuo.gif" border="0" /></a></td>
 					  </tr>
 					</table>
 				</div>
@@ -95,5 +95,5 @@
 			</form>
 		</div><!--"square-order"end-->
 	</div><!--"content-text"end-->
-	<div class="content-bbg"><img src="images/content_bbg.jpg" /></div>
+	<div class="content-bbg"><img src="../../images/content_bbg.jpg" /></div>
 </div>

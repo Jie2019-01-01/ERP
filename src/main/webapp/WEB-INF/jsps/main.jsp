@@ -131,7 +131,7 @@
 								<td><a class="hei" target="main" href="role/list.jsp">&nbsp;&nbsp;&nbsp;&nbsp;角色维护</a></td>
 							</tr>
 							<tr>
-								<td><a class="hei" target="main" href="resource/list.jsp">&nbsp;&nbsp;&nbsp;&nbsp;资源维护</a></td>
+								<td><a class="hei" target="main" href="res_list.action">&nbsp;&nbsp;&nbsp;&nbsp;资源维护</a></td>
 							</tr>
 							<tr>
 								<td><a class="hei" target="main" href="menu/list.jsp">&nbsp;&nbsp;&nbsp;&nbsp;菜单维护</a></td>

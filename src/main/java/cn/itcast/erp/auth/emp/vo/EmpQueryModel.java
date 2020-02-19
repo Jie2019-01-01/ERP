@@ -1,8 +1,9 @@
 package cn.itcast.erp.auth.emp.vo;
 
-import cn.itcast.erp.auth.utils.format.FormatUtil;
+import cn.itcast.erp.utils.base.BaseQueryModel;
+import cn.itcast.erp.utils.format.FormatUtil;
 
-public class EmpQueryModel extends EmpModel {
+public class EmpQueryModel extends EmpModel implements BaseQueryModel{
 
 	private Long maxBirth;
 	private String maxBirthView;

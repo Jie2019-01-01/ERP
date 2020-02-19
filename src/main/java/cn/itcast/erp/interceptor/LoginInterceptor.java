@@ -1,4 +1,4 @@
-package cn.itcast.erp.auth.interceptor;
+package cn.itcast.erp.interceptor;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;

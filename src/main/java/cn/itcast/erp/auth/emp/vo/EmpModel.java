@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cn.itcast.erp.auth.dep.vo.DepModel;
-import cn.itcast.erp.auth.utils.format.FormatUtil;
+import cn.itcast.erp.utils.format.FormatUtil;
 
 public class EmpModel {
 

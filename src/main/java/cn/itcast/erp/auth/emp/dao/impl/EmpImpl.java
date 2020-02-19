@@ -78,4 +78,8 @@ public class EmpImpl extends HibernateDaoSupport implements EmpDao {
 			dc.add(Restrictions.le("birth", eqm.getMaxBirth()));
 		}
 	}
+
+	public void update(EmpModel em) {
+		this.getHibernateTemplate().update(em);
+	}
 }

@@ -16,9 +16,6 @@ public class DepEbo implements DepEbi {
 
 
 	public List<DepModel> list() {
-		if(true) {
-			throw new AppException("出错了，哈哈哈哈！");
-		}
 		return depDao.list();
 	}
 

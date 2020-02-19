@@ -22,4 +22,6 @@ public interface EmpEbi {
 	public List<EmpModel> list(EmpQueryModel eqm, Integer curPage, Integer pageCount);
 
 	public Integer getCount(EmpQueryModel eqm);
+
+	public void changePwd(EmpModel loginEm, String oldPwd, String newPwd);
 }

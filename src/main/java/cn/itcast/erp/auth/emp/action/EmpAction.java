@@ -51,6 +51,24 @@ public class EmpAction extends ActionSupport{
 		return "toLogin";
 	}
 	
+	// 修改密码第一步，填写新密码
+	public String changePwd() {
+		return "changePwd";
+	}
+	
+	// 修改密码第二步，确认修改
+	public String oldPwd;
+	public String newPwd;
+	public String confirm() {
+		//获取当前登录人信息
+		EmpModel loginEm = (EmpModel) ActionContext.getContext().
+				getSession().get(EmpModel.EMP_LOGIN_OF_INFO);
+		empEbi.changePwd(loginEm, oldPwd, newPwd);
+		//将登录人信息清空
+		ActionContext.getContext().getSession().put(EmpModel.EMP_LOGIN_OF_INFO, null);
+		return "toLogin";
+	}
+	
 	// 列表
 	public String list() {
 		List<DepModel> depList = depEbi.list();

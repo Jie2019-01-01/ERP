@@ -9,6 +9,7 @@ import cn.itcast.erp.auth.emp.business.ebi.EmpEbi;
 import cn.itcast.erp.auth.emp.dao.dao.EmpDao;
 import cn.itcast.erp.auth.emp.vo.EmpModel;
 import cn.itcast.erp.auth.emp.vo.EmpQueryModel;
+import cn.itcast.erp.auth.exception.AppException;
 import cn.itcast.erp.auth.utils.format.FormatUtil;
 import cn.itcast.erp.auth.utils.format.Md5Utils;
 
@@ -65,5 +66,23 @@ public class EmpEbo implements EmpEbi {
 
 	public Integer getCount(EmpQueryModel eqm) {
 		return empDao.getCount(eqm);
+	}
+
+	public void changePwd(EmpModel loginEm, String oldPwd, String newPwd) {
+		//从loginEm中取出密码与oldPwd加密后进行比对
+		if(loginEm.getPwd().equals(Md5Utils.md5(oldPwd))) {
+			//一致
+			//将newPwd加密，然后更新
+			newPwd = Md5Utils.md5(newPwd);
+			loginEm.setPwd(newPwd);
+			empDao.update(loginEm);
+		}else {
+			//不一致
+			//抛出自定义异常	
+			throw new AppException("对不起，原始密码输入有误，本次操作失败！");
+		}
+			
+		
+			
 	}
 }

@@ -20,4 +20,6 @@ public interface EmpDao {
 	public List<EmpModel> list(EmpQueryModel eqm, Integer curPage, Integer pageCount);
 
 	public Integer getCount(EmpQueryModel eqm);
+
+	public void update(EmpModel em);
 }

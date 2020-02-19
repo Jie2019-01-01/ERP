@@ -19,7 +19,7 @@
 				<table width="100%" border="0" cellpadding="0" cellspacing="0">
 					<tr>
 						<td width="32%">
-							<a href="employee/changePwd.jsp" target="main">
+							<a href="emp_changePwd.action" target="main">
 								<img src="images/head-l.gif"	border="0" />
 							</a>
 						</td>

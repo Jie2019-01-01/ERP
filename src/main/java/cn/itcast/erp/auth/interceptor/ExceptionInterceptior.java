@@ -19,7 +19,7 @@ public class ExceptionInterceptior extends AbstractInterceptor{
 			// 发送消息到程序员邮箱
 			// 报警（根据需求）
 			ActionSupport as = (ActionSupport) invocation.getAction();
-			as.addActionError(as.getText("INFO_EMP_TEST"));
+			as.addActionError(as.getText(e.getMessage()));
 			return "appException";
 		}catch(Exception e) {
 			//开发

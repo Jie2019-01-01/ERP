@@ -10,6 +10,7 @@ import cn.itcast.erp.auth.dep.vo.DepModel;
 import cn.itcast.erp.auth.emp.business.ebi.EmpEbi;
 import cn.itcast.erp.auth.emp.vo.EmpModel;
 import cn.itcast.erp.auth.emp.vo.EmpQueryModel;
+import cn.itcast.erp.auth.exception.AppException;
 import cn.itcast.erp.auth.utils.format.FormatUtil;
 
 public class EmpAction extends ActionSupport{

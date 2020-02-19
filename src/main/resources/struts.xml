@@ -7,6 +7,8 @@
     <constant name="struts.decMode" value="true" />
     <!-- 把主题配置成simple -->
     <constant name="struts.ui.theme" value="simple" />
+    <!-- 国际化 -->
+    <constant name="struts.custom.i18n.resources" value="msg"/>
     
     <package name="default" namespace="/" extends="struts-default">
     	

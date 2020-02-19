@@ -27,6 +27,8 @@
     			<!-- 捕获appException返回的页面 -->
     		<result name="appException">/WEB-INF/jsps/error.jsp</result>
     		<result name="toLogin">/WEB-INF/jsps/login.jsp</result>
+    		<result name="{1}">/WEB-INF/jsps/${actionName}/{1}.jsp</result>
+    		<result name="toList" type="redirectAction">${actionName}_list</result>
     	</global-results>
     	
     		<!-- 进入登录页面 -->
@@ -38,21 +40,14 @@
     	<action name="emp_*" class="empAction" method="{1}">
     		<result name="loginSuccess">/WEB-INF/jsps/main.jsp</result>
     		<result name="loginFail">/WEB-INF/jsps/login.jsp</result>
-    		<result name="{1}">/WEB-INF/jsps/emp/{1}.jsp</result>
-    		<result name="toList" type="redirectAction">emp_list</result>
     	</action>
     	
     		<!-- dep -->
     	<action name="dep_*" class="depAction" method="{1}">
-    		<result name="list">/WEB-INF/jsps/dep/{1}.jsp</result>
-    		<result name="input">/WEB-INF/jsps/dep/{1}.jsp</result>
-    		<result name="toList" type="redirectAction">dep_list</result>
     	</action>
     	
     		<!-- res -->
     	<action name="res_*" class="resAction" method="{1}">
-    		<result name="{1}">/WEB-INF/jsps/res/{1}.jsp</result>
-    		<result name="toList" type="redirectAction">res_list</result>
     	</action>
     </package>
 </struts>

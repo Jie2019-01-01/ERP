@@ -2,9 +2,12 @@ package cn.itcast.erp.utils.base;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.struts2.ServletActionContext;
+
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+
 import cn.itcast.erp.auth.emp.vo.EmpModel;
 
 public class BaseAction extends ActionSupport{
@@ -53,5 +56,15 @@ public class BaseAction extends ActionSupport{
 		// 兼容页码值初始化错误
 		if(curPage<1) curPage = 1;
 		if(curPage>lastPage) curPage = lastPage;
+	}
+	
+	private String actionName;
+	public String getActionName() {return actionName;}
+	{
+		String temp = getClass().toString();
+		temp = temp.substring(temp.lastIndexOf(".")+1); // DepAction
+		temp = temp.substring(0, temp.length()-6); // Dep
+		temp = (char)(temp.charAt(0)+32)+temp.substring(1);
+		actionName = temp;
 	}
 }

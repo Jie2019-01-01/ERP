@@ -15,9 +15,11 @@
     	<interceptors>
     		<interceptor name="exceptionInterceptor" class="cn.itcast.erp.interceptor.ExceptionInterceptior"/>
     		<interceptor name="loginInterceptor" class="cn.itcast.erp.interceptor.LoginInterceptor"/>
+    		<interceptor name="authInterceptor" class="cn.itcast.erp.interceptor.AuthInterceptor"/>
     		<interceptor-stack name="myStack">
     			<interceptor-ref name="exceptionInterceptor"/>
     			<interceptor-ref name="loginInterceptor"/>
+    			<interceptor-ref name="authInterceptor"/>
     			<interceptor-ref name="defaultStack"/>
     		</interceptor-stack>
     	</interceptors>

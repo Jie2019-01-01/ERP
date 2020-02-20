@@ -5,7 +5,7 @@
 <script type="text/javascript" src="js/Calendar.js"></script>
 <script type="text/javascript">
 	$(function() {
-		$("#all").click(function() {
+		/* $("#all").click(function() {
 			$("[name=resources]:checkbox").attr("checked",$("#all").attr("checked")=="checked");
 		});
 		$("#reverse").click(function() {
@@ -13,6 +13,17 @@
                 $(this).attr("checked", !$(this).attr("checked"));
             });
 
+		}); */
+		
+		$('#all').click(function(){
+			$('#reverse').attr('checked', false);
+			$('[name=rs]').attr('checked',$(this).attr('checked')=='checked');
+		});
+		$('#reverse').click(function(){
+			$('#all').attr('checked', false);
+			$('[name=rs]').each(function(){
+				!$(this).attr('checked', !$(this).attr('checked'));
+			});
 		});
 	});
 </script>
@@ -56,17 +67,14 @@
 				    <tr  bgcolor="#FFFFFF">
 				      <td width="18%" height="30" align="center">&nbsp;</td>
 				      <td width="82%" colspan="3">
-				      	<input type="checkbox"/>员工列表
-				      	<input type="checkbox"/>添加/修改员工
-				      	<input type="checkbox"/>删除员工
-				      	<input type="checkbox"/>提交编辑员工
+				      	<s:checkboxlist name="rs" list="resList" listKey="uuid" listValue="resName"/>
 				      </td>
 				    </tr>
 				     <tr  bgcolor="#FFFFFF">
 				      <td width="18%" height="30" align="center">菜单名称</td>
 				      <td width="82%" colspan="3">
-				      	<input type="checkbox" id="all">全选&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				      	<input type="checkbox" id="reverse">反选
+				      	<input type="checkbox" id="all2">全选&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				      	<input type="checkbox" id="reverse2">反选
 				      </td>
 				    </tr>
 				    <tr  bgcolor="#FFFFFF">

@@ -6,6 +6,7 @@ public class ResModel {
 	
 	private String resName;
 	private String resValue;
+	
 	public Long getUuid() {
 		return uuid;
 	}

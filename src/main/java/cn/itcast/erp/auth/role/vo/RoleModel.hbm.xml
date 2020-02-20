@@ -9,5 +9,10 @@
 		</id>
 		<property name="rname"/>
 		<property name="rcode"/>
+		
+		<set name="reses" table="tbl_role_res">
+	        <key column="roleUuid"/>
+	        <many-to-many column="resUuid" class="cn.itcast.erp.auth.res.vo.ResModel"/>
+	    </set>
 	</class>
 </hibernate-mapping>

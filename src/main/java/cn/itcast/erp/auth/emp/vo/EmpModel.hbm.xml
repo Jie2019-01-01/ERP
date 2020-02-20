@@ -19,6 +19,10 @@
 		<property name="lastLoginTime"/>
 		
 		<many-to-one name="dm" column="depUuid" class="cn.itcast.erp.auth.dep.vo.DepModel"/>
+		<set name="rms" table="tbl_emp_role" cascade="delete">
+			<key column="empUuid"/>
+			<many-to-many column="roleUuid" class="cn.itcast.erp.auth.role.vo.RoleModel"/>
+		</set>
 	</class>
 
 	

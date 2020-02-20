@@ -41,5 +41,9 @@ public class ResEbo implements ResEbi{
 	public Integer getCount(BaseQueryModel bqm) {
 		return resDao.getCount(bqm);
 	}
+
+	public List<ResModel> getAllByEmpUuid(Long empUuid) {
+		return resDao.getAllByEmpUuid(empUuid);
+	}
 	
 }

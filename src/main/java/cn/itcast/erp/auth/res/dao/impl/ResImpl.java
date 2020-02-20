@@ -1,5 +1,7 @@
 package cn.itcast.erp.auth.res.dao.impl;
 
+import java.util.List;
+
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import cn.itcast.erp.auth.res.dao.dao.ResDao;
@@ -15,6 +17,11 @@ public class ResImpl extends BaseImpl<ResModel> implements ResDao{
 		if(rqm.getResName()!=null && rqm.getResName().trim().length()>0) {
 			dc.add(Restrictions.like("resName", "%"+rqm.getResName().trim()+"%"));
 		}
+	}
+
+	public List<ResModel> getAllByEmpUuid(Long empUuid) {
+		String hql = "from ";
+		return null;
 	}
 
 }

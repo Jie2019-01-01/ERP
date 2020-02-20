@@ -1,7 +1,10 @@
 package cn.itcast.erp.auth.role.business.ebo;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.springframework.transaction.annotation.Transactional;
+import cn.itcast.erp.auth.res.vo.ResModel;
 import cn.itcast.erp.auth.role.business.ebi.RoleEbi;
 import cn.itcast.erp.auth.role.dao.dao.RoleDao;
 import cn.itcast.erp.auth.role.vo.RoleModel;
@@ -39,6 +42,28 @@ public class RoleEbo implements RoleEbi {
 
 	public Integer getCount(BaseQueryModel bqm) {
 		return roleDao.getCount(bqm);
+	}
+
+	public void update(RoleModel rm, Long[] rs) {
+		Set<ResModel> reses = new HashSet<ResModel>();
+		for(Long resUuid: rs) {
+			ResModel temp = new ResModel();
+			temp.setUuid(resUuid);
+			reses.add(temp);
+		}
+		rm.setReses(reses);
+		roleDao.update(rm);
+	}
+
+	public void save(RoleModel rm, Long[] rs) {
+		Set<ResModel> reses = new HashSet<ResModel>();
+		for(Long resUuid: rs) {
+			ResModel temp = new ResModel();
+			temp.setUuid(resUuid);
+			reses.add(temp);
+		}
+		rm.setReses(reses);
+		roleDao.save(rm);
 	}
 
 }

@@ -2,8 +2,10 @@ package cn.itcast.erp.auth.emp.vo;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import cn.itcast.erp.auth.dep.vo.DepModel;
+import cn.itcast.erp.auth.role.vo.RoleModel;
 import cn.itcast.erp.utils.format.FormatUtil;
 
 public class EmpModel {
@@ -38,6 +40,15 @@ public class EmpModel {
 	private String birthView;
 	
 	private DepModel dm;
+	private Set<RoleModel> rms;
+
+	public Set<RoleModel> getRms() {
+		return rms;
+	}
+
+	public void setRms(Set<RoleModel> rms) {
+		this.rms = rms;
+	}
 
 	public Long getUuid() {
 		return uuid;

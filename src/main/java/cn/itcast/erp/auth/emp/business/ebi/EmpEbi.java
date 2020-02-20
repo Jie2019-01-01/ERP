@@ -24,4 +24,8 @@ public interface EmpEbi {
 	public Integer getCount(EmpQueryModel eqm);
 
 	public void changePwd(String userName, String oldPwd, String newPwd);
+
+	public void update(EmpModel em, Long[] roles);
+
+	public void save(EmpModel em, Long[] roles);
 }

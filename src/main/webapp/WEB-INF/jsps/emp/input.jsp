@@ -5,14 +5,15 @@
 <script type="text/javascript" src="js/Calendar.js"></script>
 <script type="text/javascript">
 	$(function() {
-		$("#all").click(function() {
-			$("[name=roles]:checkbox").attr("checked",$("#all").attr("checked")=="checked");
+		$('#all').click(function(){
+			$('#reverse').attr('checked',false);
+			$('[name=roles]').attr('checked', $(this).attr('checked')=='checked');
 		});
-		$("#reverse").click(function() {
-			$("[name=roles]:checkbox").each(function () {
-                $(this).attr("checked", !$(this).attr("checked"));
-            });
-
+		$('#reverse').click(function(){
+			$('#all').attr('checked',false);
+			$('[name=roles]').each(function(){
+				$(this).attr('checked', !$(this).attr('checked'));
+			});
 		});
 	});
 </script>
@@ -108,15 +109,7 @@
 				    <tr  bgcolor="#FFFFFF">
 				      <td width="18%" height="30" align="center">&nbsp;</td>
 				      <td width="82%" colspan="3">
-				      	<input type="checkbox">经理
-				      	<input type="checkbox">主管
-				      	<input type="checkbox">员工
-				      	<input type="checkbox">经理
-				      	<input type="checkbox">主管
-				      	<input type="checkbox">员工
-				      	<input type="checkbox">经理
-				      	<input type="checkbox">主管
-				      	<input type="checkbox">员工
+				      	<s:checkboxlist name="roles" list="roleList" listKey="uuid" listValue="rname"/>
 				      </td>
 				    </tr>
 				    <tr  bgcolor="#FFFFFF">

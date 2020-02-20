@@ -7,6 +7,8 @@ import cn.itcast.erp.auth.dep.vo.DepModel;
 import cn.itcast.erp.auth.emp.business.ebi.EmpEbi;
 import cn.itcast.erp.auth.emp.vo.EmpModel;
 import cn.itcast.erp.auth.emp.vo.EmpQueryModel;
+import cn.itcast.erp.auth.role.business.ebi.RoleEbi;
+import cn.itcast.erp.auth.role.vo.RoleModel;
 import cn.itcast.erp.utils.base.BaseAction;
 import cn.itcast.erp.utils.format.FormatUtil;
 
@@ -16,6 +18,8 @@ public class EmpAction extends BaseAction{
 	public void setEmpEbi(EmpEbi empEbi) {this.empEbi = empEbi;}
 	private DepEbi depEbi;
 	public void setDepEbi(DepEbi depEbi) {this.depEbi = depEbi;}
+	private RoleEbi roleEbi;
+	public void setRoleEbi(RoleEbi roleEbi) {this.roleEbi = roleEbi;}
 
 	public EmpModel em = new EmpModel();
 	public EmpQueryModel eqm = new EmpQueryModel();
@@ -70,13 +74,20 @@ public class EmpAction extends BaseAction{
 	}
 	
 	// 操作页面
+	public Long[] roles;
 	public String input() {
 		// 获取所有部门信息
 		List<DepModel> depList = depEbi.list();
 		put("depList", depList);
+		List<RoleModel> roleList = roleEbi.list();
+		put("roleList", roleList);
 		if(em.getUuid()!=null) {
 			em = empEbi.getByUuid(em.getUuid());
-			
+			roles = new Long[em.getRms().size()];
+			int i = 0;
+			for(RoleModel temp: em.getRms()) {
+				roles[i++] = temp.getUuid();
+			}
 		}
 		return "input";
 	}
@@ -84,10 +95,10 @@ public class EmpAction extends BaseAction{
 	public String birthDay;
 	public String saveOrUpdate() {
 		if(em.getUuid()!=null) {
-			empEbi.update(em);
+			empEbi.update(em, roles);
 		}else {
 			em.setBirth(FormatUtil.formatDate(birthDay));
-			empEbi.save(em);
+			empEbi.save(em, roles);
 		}
 		return "toList";
 	}

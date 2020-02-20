@@ -1,11 +1,15 @@
 package cn.itcast.erp.auth.emp.business.ebo;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import org.springframework.transaction.annotation.Transactional;
 import cn.itcast.erp.auth.emp.business.ebi.EmpEbi;
 import cn.itcast.erp.auth.emp.dao.dao.EmpDao;
 import cn.itcast.erp.auth.emp.vo.EmpModel;
 import cn.itcast.erp.auth.emp.vo.EmpQueryModel;
+import cn.itcast.erp.auth.role.vo.RoleModel;
 import cn.itcast.erp.exception.AppException;
 import cn.itcast.erp.utils.format.Md5Utils;
 
@@ -72,5 +76,33 @@ public class EmpEbo implements EmpEbi {
 		if(!result) {
 			throw new AppException("对不起，两次密码输入不一致，本次操作失败!");
 		}
+	}
+
+	public void update(EmpModel em, Long[] roles) {
+		EmpModel temp = empDao.getByUuid(em.getUuid());
+		temp.setAddress(em.getAddress());
+		temp.setEmail(em.getEmail());
+		temp.setTele(em.getTele());
+		temp.setDm(em.getDm());
+		Set<RoleModel> rms = new HashSet<RoleModel>();
+		for(Long roleUuid: roles) {
+			RoleModel rmTemp = new RoleModel();
+			rmTemp.setUuid(roleUuid);
+			rms.add(rmTemp);
+		}
+		temp.setRms(rms);
+	}
+
+	public void save(EmpModel em, Long[] roles) {
+		em.setLastLoginTime(System.currentTimeMillis());
+		em.setPwd(Md5Utils.md5(em.getPwd()));
+		Set<RoleModel> rms = new HashSet<RoleModel>();
+		for(Long roleUuid: roles) {
+			RoleModel temp = new RoleModel();
+			temp.setUuid(roleUuid);
+			rms.add(temp);
+		}
+		em.setRms(rms);
+		empDao.save(em);
 	}
 }

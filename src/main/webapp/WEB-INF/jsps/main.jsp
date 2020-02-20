@@ -128,7 +128,7 @@
 								<td><a class="hei" target="main" href="emp_list.action">&nbsp;&nbsp;&nbsp;&nbsp;员工维护</a></td>
 							</tr>
 							<tr>
-								<td><a class="hei" target="main" href="role/list.jsp">&nbsp;&nbsp;&nbsp;&nbsp;角色维护</a></td>
+								<td><a class="hei" target="main" href="role_list.action">&nbsp;&nbsp;&nbsp;&nbsp;角色维护</a></td>
 							</tr>
 							<tr>
 								<td><a class="hei" target="main" href="res_list.action">&nbsp;&nbsp;&nbsp;&nbsp;资源维护</a></td>

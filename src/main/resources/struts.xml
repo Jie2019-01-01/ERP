@@ -49,5 +49,9 @@
     		<!-- res -->
     	<action name="res_*" class="resAction" method="{1}">
     	</action>
+    	
+    		<!-- role -->
+    	<action name="role_*" class="roleAction" method="{1}">
+    	</action>
     </package>
 </struts>

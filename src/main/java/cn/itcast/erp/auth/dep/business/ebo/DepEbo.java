@@ -47,8 +47,8 @@ public class DepEbo implements DepEbi {
 		return depDao.list(bqm,curPage, pageCount);
 	}
 
-	public Integer getCount(BaseQueryModel cqm) {
-		return depDao.getCount(cqm);
+	public Integer getCount(BaseQueryModel bqm) {
+		return depDao.getCount(bqm);
 	}
 
 }

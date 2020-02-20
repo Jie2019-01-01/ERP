@@ -9,6 +9,8 @@ import cn.itcast.erp.auth.emp.business.ebi.EmpEbi;
 import cn.itcast.erp.auth.emp.dao.dao.EmpDao;
 import cn.itcast.erp.auth.emp.vo.EmpModel;
 import cn.itcast.erp.auth.emp.vo.EmpQueryModel;
+import cn.itcast.erp.auth.res.dao.dao.ResDao;
+import cn.itcast.erp.auth.res.vo.ResModel;
 import cn.itcast.erp.auth.role.vo.RoleModel;
 import cn.itcast.erp.exception.AppException;
 import cn.itcast.erp.utils.format.Md5Utils;
@@ -18,6 +20,8 @@ public class EmpEbo implements EmpEbi {
 
 	private EmpDao empDao;
 	public void setEmpDao(EmpDao empDao) {this.empDao = empDao;}
+	private ResDao resDao;
+	public void setResDao(ResDao resDao) {this.resDao = resDao;}
 
 	public EmpModel login(String userName, String pwd) {
 		// pwd进行Md5加密
@@ -26,6 +30,13 @@ public class EmpEbo implements EmpEbi {
 		if(loginEm!=null) {
 			// 更新最后登录时间
 			loginEm.setLastLoginTime(System.currentTimeMillis());
+			// 连同该用户的资源一同获取出来
+			StringBuilder sbf = new StringBuilder();
+			List<ResModel> resList = resDao.getAllByEmpUuid(loginEm.getUuid());
+			for(ResModel temp: resList) {
+				sbf.append(temp.getResValue()+",");
+			}
+			loginEm.setReses(sbf.toString());
 		}
 		return loginEm;
 	}

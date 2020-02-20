@@ -12,6 +12,7 @@
     
     <bean id="empEbi" class="cn.itcast.erp.auth.emp.business.ebo.EmpEbo">
     	<property name="empDao" ref="empDao"/>
+    	<property name="resDao" ref="resDao"/>
     </bean>
     
     <bean id="empDao" class="cn.itcast.erp.auth.emp.dao.impl.EmpImpl">

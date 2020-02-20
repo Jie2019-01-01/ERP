@@ -20,8 +20,8 @@ public class ResImpl extends BaseImpl<ResModel> implements ResDao{
 	}
 
 	public List<ResModel> getAllByEmpUuid(Long empUuid) {
-		String hql = "from ";
-		return null;
+		String hql = "select distinct res from EmpModel em join em.rms rm join rm.reses res where em.uuid=?";
+		return this.getHibernateTemplate().find(hql, empUuid);
 	}
 
 }

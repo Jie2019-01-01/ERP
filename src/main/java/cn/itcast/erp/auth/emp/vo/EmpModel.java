@@ -41,6 +41,17 @@ public class EmpModel {
 	
 	private DepModel dm;
 	private Set<RoleModel> rms;
+	
+	// 辅助值
+	private String reses;
+
+	public String getReses() {
+		return reses;
+	}
+
+	public void setReses(String reses) {
+		this.reses = reses;
+	}
 
 	public Set<RoleModel> getRms() {
 		return rms;

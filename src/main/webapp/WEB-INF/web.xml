@@ -11,6 +11,10 @@
 	    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	
+	<listener>
+	    <listener-class>cn.itcast.erp.listener.ResLoadLintener</listener-class>
+	</listener>
+	
 	<!-- 添加过滤器，延迟session关闭 -->
 	<filter>
 	    <filter-name>OpenSessionInViewFilter</filter-name>

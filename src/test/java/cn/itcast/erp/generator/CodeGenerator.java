@@ -3,7 +3,8 @@ package cn.itcast.erp.generator;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import cn.itcast.erp.auth.role.vo.RoleModel;
+
+import cn.itcast.erp.auth.menu.vo.MenuModel;
 
 public class CodeGenerator {
 
@@ -18,7 +19,7 @@ public class CodeGenerator {
 	
 	public static void main(String[] args) throws Exception {
 		//资源初始化DepModel
-		dataInit(RoleModel.class);
+		dataInit(MenuModel.class);
 		createDirs();
 		QueryModel();
 		dao();

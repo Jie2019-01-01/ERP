@@ -5,14 +5,15 @@
 <script type="text/javascript" src="js/Calendar.js"></script>
 <script type="text/javascript">
 	$(function() {
-		$("#all").click(function() {
-			$("[name=resources]:checkbox").attr("checked",$("#all").attr("checked")=="checked");
+		$('#all').click(function(){
+			$('#reverse').attr('checked', false);
+			$('[name=roles]').attr('checked', $(this).attr('checked')=='checked');
 		});
-		$("#reverse").click(function() {
-			$("[name=resources]:checkbox").each(function () {
-                $(this).attr("checked", !$(this).attr("checked"));
-            });
-
+		$('#reverse').click(function(){
+			$('#all').attr('checked', false);
+			$('[name=roles]').each(function(){
+				$(this).attr('checked', !$(this).attr('checked'));
+			});
 		});
 	});
 </script>
@@ -24,7 +25,8 @@
 	</div>
 	<div class="content-text">
 		<div class="square-order">
-			<form action="list.jsp" method="post">
+			<s:form action="menu_saveOrUpdate.action" method="post">
+			<s:hidden name="mm.uuid"/>
   			<div style="border:1px solid #cecece;">
 				<table width="100%"  border="0" cellpadding="0" cellspacing="0">
 				  <tr bgcolor="#FFFFFF">
@@ -35,14 +37,11 @@
 				    <tr  bgcolor="#FFFFFF">
 				      <td width="18%" height="30" align="center">菜单名称</td>
 				      <td width="32%">
-				      	<input type="text" size="25"/>
+				      	<s:textfield name="mm.mname" size="25"/>
 				      </td>
 				      <td width="18%" align="center">所属父菜单</td>
 				      <td width="32%">
-				      	<select style="width:190px">
-				      		<option>1111</option>
-				      		<option>1111</option>
-				      	</select>
+				      	<s:select name="mm.mm.uuid" list="menuList" cssStyle="width:190px" listKey="uuid" listValue="mname"/>
 				      </td>
 				    </tr>
 				    <tr  bgcolor="#FFFFFF">
@@ -51,7 +50,7 @@
 				    <tr  bgcolor="#FFFFFF">
 				      <td width="18%" height="30" align="center">URL</td>
 				      <td width="82%" colspan="3">
-				      	<input type="text" size="82"/>
+				      	<s:textfield name="mm.murl" size="82"/>
 				      </td>
 				    </tr>
 				    <tr  bgcolor="#FFFFFF">
@@ -67,9 +66,7 @@
 				    <tr  bgcolor="#FFFFFF">
 				      <td width="18%" height="30" align="center">&nbsp;</td>
 				      <td width="82%" colspan="3">
-				      	<input type="checkbox"/>超级管理员
-				      	<input type="checkbox"/>销售部主管
-				      	<input type="checkbox"/>销售部员工
+				      	<s:checkboxlist name="roles" list="roleList" listKey="uuid" listValue="rname"/>
 				      </td>
 				    </tr>
 				    <tr  bgcolor="#FFFFFF">
@@ -92,7 +89,7 @@
 					</table>
 				</div>
 			</div>
-			</form>
+			</s:form>
 		</div><!--"square-order"end-->
 	</div><!--"content-text"end-->
 	<div class="content-bbg"><img src="images/content_bbg.jpg" /></div>

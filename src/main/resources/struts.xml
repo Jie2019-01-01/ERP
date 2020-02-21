@@ -55,5 +55,9 @@
     		<!-- role -->
     	<action name="role_*" class="roleAction" method="{1}">
     	</action>
+    	
+    		<!-- menu -->
+    	<action name="menu_*" class="menuAction" method="{1}">
+    	</action>
     </package>
 </struts>

@@ -19,4 +19,20 @@ public interface RoleEbi extends BaseEbi<RoleModel>{
 	 */
 	public void save(RoleModel rm, Long[] rs);
 
+	/**
+	 * 同绑定资源、绑定菜单操作一同保存
+	 * @param rm 角色模型
+	 * @param rs 需绑定资源的uuid数组
+	 * @param menus 需绑定的菜单数组
+	 */
+	public void update(RoleModel rm, Long[] rs, Long[] menus);
+
+	/**
+	 * 同绑定资源、绑定菜单操作一同保存
+	 * @param rm 角色模型
+	 * @param rs 需绑定资源的uuid数组
+	 * @param menus 需绑定的菜单数组
+	 */
+	public void save(RoleModel rm, Long[] rs, Long[] menus);
+
 }

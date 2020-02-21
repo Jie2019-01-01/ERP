@@ -11,5 +11,10 @@
 		<property name="murl"/>
 		
 		<many-to-one name="mm" column="parent" class="cn.itcast.erp.auth.menu.vo.MenuModel"/>
+		
+		<set name="rms" table="tbl_menu_role">
+			<key column="menuUuid"/>
+			<many-to-many column="roleUuid" class="cn.itcast.erp.auth.role.vo.RoleModel"/>		
+		</set>
 	</class>
 </hibernate-mapping>

@@ -27,7 +27,7 @@ public class MenuAction extends BaseAction{
 		return "list";
 	}
 
-	private Long[] roles;
+	public Long[] roles;
 	public String input() {
 		List<MenuModel> menuList = menuEbi.list();
 		put("menuList", menuList);
@@ -35,15 +35,20 @@ public class MenuAction extends BaseAction{
 		put("roleList", roleList);
 		if(mm.getUuid()!=null) {
 			mm = menuEbi.getByUuid(mm.getUuid());
+			roles = new Long[mm.getRms().size()];
+			int i = 0;
+			for(RoleModel temp: mm.getRms()) {
+				roles[i++] = temp.getUuid();
+			}
 		}
 		return "input";
 	}
 
 	public String saveOrUpdate() {
 		if(mm.getUuid()!=null) {
-			menuEbi.update(mm);
+			menuEbi.update(mm, roles);
 		}else {
-			menuEbi.save(mm);
+			menuEbi.save(mm, roles);
 		}
 		return "toList";
 	}

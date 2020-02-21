@@ -23,4 +23,8 @@ public interface MenuEbi extends BaseEbi<MenuModel>{
 	 */
 	public List<MenuModel> listAsParent();
 
+	public void update(MenuModel mm, Long[] roles);
+
+	public void save(MenuModel mm, Long[] roles);
+
 }

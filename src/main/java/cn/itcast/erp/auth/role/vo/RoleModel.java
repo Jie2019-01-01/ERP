@@ -2,6 +2,7 @@ package cn.itcast.erp.auth.role.vo;
 
 import java.util.Set;
 
+import cn.itcast.erp.auth.menu.vo.MenuModel;
 import cn.itcast.erp.auth.res.vo.ResModel;
 
 public class RoleModel {
@@ -12,7 +13,14 @@ public class RoleModel {
 	private String rcode;
 	
 	private Set<ResModel> reses;
+	private Set<MenuModel> mms;
 	
+	public Set<MenuModel> getMms() {
+		return mms;
+	}
+	public void setMms(Set<MenuModel> mms) {
+		this.mms = mms;
+	}
 	public Set<ResModel> getReses() {
 		return reses;
 	}

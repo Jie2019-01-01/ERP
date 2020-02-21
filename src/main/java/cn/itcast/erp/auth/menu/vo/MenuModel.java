@@ -1,5 +1,9 @@
 package cn.itcast.erp.auth.menu.vo;
 
+import java.util.Set;
+
+import cn.itcast.erp.auth.role.vo.RoleModel;
+
 public class MenuModel {
 	
 	public static final Long MENU_SYSTEM_OF_UUID = 1L;
@@ -9,6 +13,16 @@ public class MenuModel {
 	private String murl;
 	
 	private MenuModel mm;
+	
+	private Set<RoleModel> rms;
+	
+	public Set<RoleModel> getRms() {
+		return rms;
+	}
+
+	public void setRms(Set<RoleModel> rms) {
+		this.rms = rms;
+	}
 
 	public Long getUuid() {
 		return uuid;

@@ -5,7 +5,7 @@
 <script type="text/javascript">
 	$(function() {
 		$("#query").click(function() {
-			$("[name='pageNum']").val(1);
+			$("[name='curPage']").val(1);
 			$("form:first").submit();
 		});
 	});

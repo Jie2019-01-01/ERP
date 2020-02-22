@@ -41,4 +41,8 @@ public class SupplierEbo implements SupplierEbi {
 		return supplierDao.getCount(bqm);
 	}
 
+	public List<SupplierModel> getNotNull() {
+		return supplierDao.getNotNull();
+	}
+
 }

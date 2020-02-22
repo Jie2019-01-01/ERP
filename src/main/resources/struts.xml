@@ -10,7 +10,7 @@
     <!-- 国际化 -->
     <constant name="struts.custom.i18n.resources" value="msg"/>
     
-    <package name="default" namespace="/" extends="struts-default">
+    <package name="default" namespace="/" extends="json-default">
     	
     	<interceptors>
     		<interceptor name="exceptionInterceptor" class="cn.itcast.erp.interceptor.ExceptionInterceptior"/>
@@ -29,7 +29,8 @@
     			<!-- 捕获appException返回的页面 -->
     		<result name="appException">/WEB-INF/jsps/error.jsp</result>
     		<result name="toLogin">/WEB-INF/jsps/login.jsp</result>
-    		<result name="{1}">/WEB-INF/jsps/${actionName}/{1}.jsp</result>
+    		<result name="list">/WEB-INF/jsps/${actionName}/{1}.jsp</result>
+    		<result name="input">/WEB-INF/jsps/${actionName}/{1}.jsp</result>
     		<result name="toList" type="redirectAction">${actionName}_list</result>
     	</global-results>
     	
@@ -67,5 +68,13 @@
     		<!-- goodsType -->
     	<action name="goodsType_*" class="goodsTypeAction" method="{1}">
     	</action>
+    	
+    		<!-- goods -->
+    	<action name="goods_*" class="goodsAction" method="{1}">
+    		<result name="ajaxGetBySm" type="json">
+    			<param name="includeProperties">gtmList\[\d+\]\.uuid,gtmList\[\d+\]\.gtname,</param>
+    		</result>
+    	</action>
+    	
     </package>
 </struts>

@@ -1,5 +1,7 @@
 package cn.itcast.erp.invoce.goodstype.dao.impl;
 
+import java.util.List;
+
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import cn.itcast.erp.invoce.goodstype.dao.dao.GoodsTypeDao;
@@ -18,6 +20,11 @@ public class GoodsTypeImpl extends BaseImpl<GoodsTypeModel> implements GoodsType
 		if(gtqm.getSm()!=null && gtqm.getSm().getUuid()!=null && gtqm.getSm().getUuid()!=-1) {
 			dc.add(Restrictions.eq("sm", gtqm.getSm()));
 		}
+	}
+
+	public List<GoodsTypeModel> getBySupplier(Long uuid) {
+		String hql = "from GoodsTypeModel where sm.uuid=?";
+		return this.getHibernateTemplate().find(hql, uuid);
 	}
 
 }

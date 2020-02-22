@@ -56,7 +56,7 @@ public class MenuAction extends BaseAction{
 
 	public Long[] roles;
 	public String input() {
-		List<MenuModel> menuList = menuEbi.list();
+		List<MenuModel> menuList = menuEbi.listAsParent();
 		put("menuList", menuList);
 		List<RoleModel> roleList = roleEbi.list();
 		put("roleList", roleList);

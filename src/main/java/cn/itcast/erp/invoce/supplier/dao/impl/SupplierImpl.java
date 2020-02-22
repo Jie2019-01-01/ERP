@@ -1,5 +1,7 @@
 package cn.itcast.erp.invoce.supplier.dao.impl;
 
+import java.util.List;
+
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 
@@ -25,6 +27,11 @@ public class SupplierImpl extends BaseImpl<SupplierModel> implements SupplierDao
 		if(sqm.getPattern()!=null && sqm.getPattern()!=-1) {
 			dc.add(Restrictions.eq("pattern", sqm.getPattern()));
 		}
+	}
+
+	public List<SupplierModel> getNotNull() {
+		String hql = "select distinct s from GoodsTypeModel gtm join gtm.sm s";
+		return this.getHibernateTemplate().find(hql);
 	}
 
 }

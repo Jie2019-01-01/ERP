@@ -5,13 +5,13 @@
 <div class="content-right">
 	<div class="content-r-pic_w">
 		<div style="margin:8px auto auto 12px;margin-top:6px">
-			<span class="page_title">供应商管理</span>
+			<span class="page_title">商品类别管理</span>
 		</div>
 	</div>
 	<div class="content-text">
 		<div class="square-order">
-			<s:form action="supplier_saveOrUpdate.action" method="post">
-			<s:hidden name="sm.uuid"/>
+			<s:form action="goodsType_saveOrUpdate.action" method="post">
+			<s:hidden name="gm.uuid"/>
   			<div style="border:1px solid #cecece;">
 				<table width="100%"  border="0" cellpadding="0" cellspacing="0">
 				  <tr bgcolor="#FFFFFF">
@@ -20,45 +20,19 @@
 				</table>
 				<table width="100%"  border="0" cellpadding="0" cellspacing="0">
 				    <tr  bgcolor="#FFFFFF">
-				      <td width="18%" height="30" align="center">供应商名称</td>
+				      <td width="18%" height="30" align="center">供应商</td>
 				      <td width="82%" colspan="3">
-				      	<s:textfield name="sm.sname" size="82"/>
+				      	<s:select name="gm.sm.uuid" list="supplierList" listKey="uuid" 
+				      		listValue="sname" cssStyle="width:190px"/>
 				      </td>
 				    </tr>
 				    <tr  bgcolor="#FFFFFF">
 				      <td colspan="4">&nbsp;</td>
 				    </tr>
 				    <tr  bgcolor="#FFFFFF">
-				      <td width="18%" height="30" align="center">供应商地址</td>
+				      <td width="18%" height="30" align="center">商品类别名称</td>
 				      <td width="82%" colspan="3">
-				      	<s:textfield name="sm.address"  size="82"/>
-				      </td>
-				    </tr>
-				    <tr  bgcolor="#FFFFFF">
-				      <td colspan="4">&nbsp;</td>
-				    </tr>
-				    <tr  bgcolor="#FFFFFF">
-				      <td width="18%" height="30" align="center">联系人</td>
-				      <td width="32%">
-				      	<s:textfield name="sm.contact"  size="25"/>
-				      </td>
-				      <td width="18%" align="center">电话</td>
-				      <td width="32%">
-				      	<s:textfield name="sm.tele"  size="25"/>
-				      </td>
-				    </tr>
-				    <tr  bgcolor="#FFFFFF">
-				      <td colspan="4">&nbsp;</td>
-				    </tr>
-				    <tr  bgcolor="#FFFFFF">
-				      <td width="18%" height="30" align="center">送货方式</td>
-				      <td width="32%">
-				      	<s:select name="sm.pattern" list="@cn.itcast.erp.invoce.supplier.vo.SupplierModel@patternMap" 
-				      		cssStyle="width:190px"/>
-				      </td>
-				      <td width="18%" align="center">&nbsp;</td>
-				      <td width="32%">
-				      	&nbsp;
+				      	<s:textfield name="gm.gtname" size="25"/>
 				      </td>
 				    </tr>
 				    <tr  bgcolor="#FFFFFF">

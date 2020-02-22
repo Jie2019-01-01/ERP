@@ -36,4 +36,15 @@ public class MenuImpl extends BaseImpl<MenuModel> implements MenuDao {
 		return this.getHibernateTemplate().find(hql, MenuModel.MENU_SYSTEM_OF_UUID, MenuModel.MENU_SYSTEM_OF_UUID);
 	}
 
+	public List<MenuModel> listOne(Long empUuid) {
+		String hql = "select distinct mm from EmpModel em join em.rms rm join "
+				+ "rm.mms mm where mm.mm.uuid=? and em.uuid=? order by mm.uuid";
+		return this.getHibernateTemplate().find(hql, MenuModel.MENU_SYSTEM_OF_UUID, empUuid);
+	}
+
+	public List<MenuModel> listByMenu(Long empUuid, Long puuid) {
+		String hql = "select distinct mm from EmpModel em join em.rms rm join "
+				+ "rm.mms mm where mm.mm.uuid=? and em.uuid=? order by mm.uuid";
+		return this.getHibernateTemplate().find(hql, puuid, empUuid);
+	}
 }

@@ -5,16 +5,6 @@
 <script type="text/javascript" src="js/Calendar.js"></script>
 <script type="text/javascript">
 	$(function() {
-		/* $("#all").click(function() {
-			$("[name=resources]:checkbox").attr("checked",$("#all").attr("checked")=="checked");
-		});
-		$("#reverse").click(function() {
-			$("[name=resources]:checkbox").each(function () {
-                $(this).attr("checked", !$(this).attr("checked"));
-            });
-
-		}); */
-		
 		$('#all').click(function(){
 			$('#reverse').attr('checked', false);
 			$('[name=rs]').attr('checked',$(this).attr('checked')=='checked');
@@ -22,6 +12,16 @@
 		$('#reverse').click(function(){
 			$('#all').attr('checked', false);
 			$('[name=rs]').each(function(){
+				!$(this).attr('checked', !$(this).attr('checked'));
+			});
+		});
+		$('#all2').click(function(){
+			$('#reverse2').attr('checked', false);
+			$('[name=menus]').attr('checked',$(this).attr('checked')=='checked');
+		});
+		$('#reverse2').click(function(){
+			$('#all2').attr('checked', false);
+			$('[name=menus]').each(function(){
 				!$(this).attr('checked', !$(this).attr('checked'));
 			});
 		});

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<bean id="goodsTypeAction" class="cn.itcast.erp.invoce.goodstype.action.GoodsTypeAction" scope="prototype">
+		<property name="goodsTypeEbi" ref="goodsTypeEbi"/>
+		<property name="supplierEbi" ref="supplierEbi"/>
+	</bean>
+
+	<bean id="goodsTypeEbi" class="cn.itcast.erp.invoce.goodstype.business.ebo.GoodsTypeEbo">
+		<property name="goodsTypeDao" ref="goodsTypeDao"/>
+	</bean>
+
+	<bean id="goodsTypeDao" class="cn.itcast.erp.invoce.goodstype.dao.impl.GoodsTypeImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+</beans>

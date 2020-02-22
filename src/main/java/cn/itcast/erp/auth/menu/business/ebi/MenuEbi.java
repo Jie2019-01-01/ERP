@@ -27,4 +27,19 @@ public interface MenuEbi extends BaseEbi<MenuModel>{
 
 	public void save(MenuModel mm, Long[] roles);
 
+	/**
+	 * 获取当前用户中拥有的角色所对应的一级菜单
+	 * @param empUuid 用户id
+	 * @return
+	 */
+	public List<MenuModel> listOne(Long empUuid);
+
+	/**
+	 * 通过父级菜单获取当前用户中拥有的角色所对应的菜单
+	 * @param puuid 父菜单的uuid 
+	 * @param	empUuid 用户id
+	 * @return
+	 */
+	public List<MenuModel> listByMenu(Long empUuid, Long puuid);
+
 }

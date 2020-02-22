@@ -44,108 +44,14 @@
 				<div style="margin-left:2px;">
 					<img src="images/left-top.gif" width="162" height="25" />
 				</div>
+				<!--"left-bottom"-->
 				<div class="left-bottom">
-						<table width="100%" border="0" cellpadding="0" cellspacing="0">
-							<tr>
-								<td><a class="hei" target="main" href="#">商品管理</a></td>
-							</tr>
-							<tr>
-								<td><a class="hei" target="main" href="supplier/list.jsp">&nbsp;&nbsp;&nbsp;&nbsp;供应商</a></td>
-							</tr>
-							<tr>
-								<td><a class="hei" target="main" href="goodstype/list.jsp">&nbsp;&nbsp;&nbsp;&nbsp;商品类别</a></td>
-							</tr>
-							<tr>
-								<td><a class="hei" target="main" href="goods/list.jsp">&nbsp;&nbsp;&nbsp;&nbsp;商品</a></td>
-							</tr>
-							<tr>
-								<td><a class="hei" target="main" href="#">采购管理</a></td>
-							</tr>
-							<tr>
-								<td><a class="hei" target="main" href="order/in/inList.jsp">&nbsp;&nbsp;&nbsp;&nbsp;采购订单</a></td>
-							</tr>
-							<tr>
-								<td><a class="hei" target="main" href="#">&nbsp;&nbsp;&nbsp;&nbsp;采购退货</a></td>
-							</tr>
-							<tr>
-								<td><a class="hei" target="main" href="order/in/inApproveList.jsp">&nbsp;&nbsp;&nbsp;&nbsp;采购审批</a></td>
-							</tr>
-							<tr>
-								<td><a class="hei" target="main" href="#">销售管理</a></td>
-							</tr>
-							<tr>
-								<td><a class="hei" target="main" href="#">&nbsp;&nbsp;&nbsp;&nbsp;销售订单</a></td>
-							</tr>
-							<tr>
-								<td><a class="hei" target="main" href="#">&nbsp;&nbsp;&nbsp;&nbsp;销售退货</a></td>
-							</tr>
-							<tr>
-								<td><a class="hei" target="main" href="#">&nbsp;&nbsp;&nbsp;&nbsp;销售审批</a></td>
-							</tr>
-							<tr>
-								<td><a class="hei" target="main" href="#">商品运输</a></td>
-							</tr>
-							<tr>
-								<td><a class="hei" target="main" href="order/transport/list.jsp">&nbsp;&nbsp;&nbsp;&nbsp;运输任务指派</a></td>
-							</tr>
-							<tr>
-								<td><a class="hei" target="main" href="order/transport/tasks.jsp">&nbsp;&nbsp;&nbsp;&nbsp;运输任务查询</a></td>
-							</tr>
-							<tr>
-								<td><a class="hei" target="main" href="#">仓库管理</a></td>
-							</tr>
-							<tr>
-								<td><a class="hei" target="main" href="store/detail/list.jsp">&nbsp;&nbsp;&nbsp;&nbsp;库存查询</a></td>
-							</tr>
-							<tr>
-								<td><a class="hei" target="main" href="store/in/list.jsp">&nbsp;&nbsp;&nbsp;&nbsp;入库</a></td>
-							</tr>
-							<tr>
-								<td><a class="hei" target="main" href="#">&nbsp;&nbsp;&nbsp;&nbsp;出库</a></td>
-							</tr>
-							<tr>
-								<td><a class="hei" target="main" href="store/oper/list.jsp">&nbsp;&nbsp;&nbsp;&nbsp;仓库操作明细</a></td>
-							</tr>
-							<tr>
-								<td><a class="hei" target="main" href="#">报表中心</a></td>
-							</tr>
-							<tr>
-								<td><a class="hei" target="main" href="bill/in/inGoods.jsp">&nbsp;&nbsp;&nbsp;&nbsp;进货报表</a></td>
-							</tr>
-							<tr>
-								<td><a class="hei" target="main" href="#">&nbsp;&nbsp;&nbsp;&nbsp;销售报表</a></td>
-							</tr>
-							<tr>
-								<td><a class="hei" target="main" href="#">&nbsp;&nbsp;&nbsp;&nbsp;仓库报表</a></td>
-							</tr>
-							<tr>
-								<td><a class="hei" target="main" href="#">基础维护</a></td>
-							</tr>
-							<tr>
-								<td><a class="hei" target="main" href="dep_list.action">&nbsp;&nbsp;&nbsp;&nbsp;部门维护</a></td>
-							</tr>
-							<tr>
-								<td><a class="hei" target="main" href="emp_list.action">&nbsp;&nbsp;&nbsp;&nbsp;员工维护</a></td>
-							</tr>
-							<tr>
-								<td><a class="hei" target="main" href="role_list.action">&nbsp;&nbsp;&nbsp;&nbsp;角色维护</a></td>
-							</tr>
-							<tr>
-								<td><a class="hei" target="main" href="res_list.action">&nbsp;&nbsp;&nbsp;&nbsp;资源维护</a></td>
-							</tr>
-							<tr>
-								<td><a class="hei" target="main" href="menu_list.action">&nbsp;&nbsp;&nbsp;&nbsp;菜单维护</a></td>
-							</tr>
-							<tr>
-								<td><a class="hei" target="main" href="store/list.jsp">&nbsp;&nbsp;&nbsp;&nbsp;仓库管理</a></td>
-							</tr>
-						</table>
+					<s:include value="menu/menu.jsp"/>
 				</div>
-				<!--"left-bottom"end-->
 			</div>
 			<!--"left"end-->
-
-			<iframe id="frame-contect" src="context.jsp"
+			
+			<iframe id="frame-contect" src="jsps/context.jsp"
 				style="width:848px;float:right;height:530px" scrolling="no"
 				name="main" frameborder="0"></iframe>
 			<!--"content-right"end-->
@@ -170,4 +76,7 @@
 	<!--"container"end-->
 	<%@include file="/WEB-INF/jsps/tools/mask.jsp"%>
 </body>
+<script type="text/javascript">
+
+</script>
 </html>

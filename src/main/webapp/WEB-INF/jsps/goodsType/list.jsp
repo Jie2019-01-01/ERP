@@ -12,41 +12,35 @@
 	function showMsg(msg,uuid){
 		top.$('context-msg').style.display = "block";
 		top.$('context-msg-text').innerHTML=msg;
-		top.$('hid-action').value="supplier_delete.action?sm.uuid="+uuid;
+		top.$('hid-action').value="goodsType_delete.action?gm.uuid="+uuid;
 		top.lock.show();
 	}
 </script>
 <div class="content-right">
 	<div class="content-r-pic_w">
 		<div style="margin:8px auto auto 12px;margin-top:6px">
-			<span class="page_title">供应商管理</span>
+			<span class="page_title">商品类别管理</span>
 		</div>
 	</div>
 	<div class="content-text">
-		<s:form action="supplier_list.action" method="post">
+		<s:form action="goodsType_list.action" method="post">
 			<div class="square-o-top">
 				<table width="100%" border="0" cellpadding="0" cellspacing="0"
 					style="font-size:14px; font-weight:bold; font-family:"黑体";">
 					<tr>
-						<td width="28%" height="30">&nbsp;</td>
-						<td width="8%">供应商:</td>
-						<td width="17%"><s:textfield name="sqm.sname" size="18"/></td>
-						<td width="8%">联系人:</td>
-						<td width="17%"><s:textfield name="sqm.contact" size="18"/></td>
-						<td width="12%">
-							<a id="query"><img src="images/can_b_01.gif" border="0" /> </a></td>
-					</tr>
-					<tr>
-						<td height="30">&nbsp;</td>
-						<td>电话:</td>
-						<td><s:textfield name="sqm.tele" size="18"/></td>
-						<td>提货方式：</td>
-						<td>
-							<s:select list="@cn.itcast.erp.invoce.supplier.vo.SupplierModel@patternMap" 
-								cssClass="kuan" headerKey="-1" headerValue="---请-选-择---" name="sqm.pattern"/>
+						<td width="68" height="30">&nbsp;</td>
+						<td width="123">&nbsp;</td>
+						<td width="62">供应商:</td>
+						<td width="142">
+							<s:select name="gqm.sm.uuid" list="supplierList" listKey="uuid" listValue="sname"
+								headerKey="-1" headerValue="---请-选-择---" cssClass="kuan"/>
 						</td>
-						<td>
-							<a href="supplier_input.action"><img	src="images/can_b_02.gif" border="0" /> </a></td>
+						<td width="60">类别名称:</td>
+						<td width="149"><s:textfield name="gqm.gtname" size="18"/></td>
+						<td width="70"><a id="query"> <img
+								src="images/can_b_01.gif" border="0" /> </a></td>
+						<td width="70"><a href="goodsType_input.action"><img
+								src="images/can_b_02.gif" border="0" /> </a></td>
 					</tr>
 				</table>
 			</div>
@@ -55,25 +49,19 @@
 				<table width="100%" border="1" cellpadding="0" cellspacing="0">
 					<tr align="center"
 						style="background:url(images/table_bg.gif) repeat-x;">
-						<td width="20%" height="30">供应商</td>
-						<td width="20%">地址</td>
-						<td width="20%">联系人</td>
-						<td width="12%">电话</td>
-						<td width="12%">送货方式</td>
-						<td width="16%">操作</td>
+						<td width="30%" height="30">供应商</td>
+						<td width="30%">类别名称</td>
+						<td width="40%">操作</td>
 					</tr>
-					<s:iterator value="supplierList">
+					<s:iterator value="goodsTypeList">
 						<tr align="center" bgcolor="#FFFFFF">
-							<td width="13%" height="30">${sname }</td>
-							<td>${address }</td>
-							<td>${contact }</td>
-							<td>${tele }</td>
-							<td>${patternView }</td>
+							<td width="30%" height="30">${sm.sname }</td>
+							<td>${gtname }</td>
 							<td>
 								<img src="images/icon_3.gif" /> 
 								<span style="line-height:12px; text-align:center;"> 
-									<s:a action="supplier_input.action" cssClass="xiu">
-										<s:param name="sm.uuid" value="uuid"/>
+									<s:a action="goodsType_input.action" cssClass="xiu">
+										<s:param name="gm.uuid" value="uuid"/>
 										修改
 									</s:a>
 								</span> 

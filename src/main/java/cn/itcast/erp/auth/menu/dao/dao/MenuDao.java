@@ -19,4 +19,8 @@ public interface MenuDao extends BaseDao<MenuModel>{
 
 	public List<MenuModel> listAsParent();
 
+	public List<MenuModel> listOne(Long empUuid);
+
+	public List<MenuModel> listByMenu(Long empUuid, Long puuid);
+
 }

@@ -1,5 +1,6 @@
 package cn.itcast.erp.auth.menu.action;
 
+import java.io.PrintWriter;
 import java.util.List;
 import cn.itcast.erp.auth.menu.business.ebi.MenuEbi;
 import cn.itcast.erp.auth.menu.vo.MenuModel;
@@ -17,6 +18,32 @@ public class MenuAction extends BaseAction{
 
 	public MenuModel mm = new MenuModel();
 	public MenuQueryModel mqm = new MenuQueryModel();
+	
+	public String showMenu() throws Exception {
+		getResponse().setContentType("text/html;charset=utf-8");
+		String root = getRequest().getParameter("root");
+		PrintWriter pw = getResponse().getWriter();
+		StringBuilder temp = new StringBuilder();
+		temp.append("[");
+		if("source".equals(root)) {
+			// 获取所有一级菜单
+			List<MenuModel> oneList = menuEbi.listOne(getLoginEm().getUuid());
+			for(MenuModel one: oneList) {
+				temp.append("{\"id\":"+one.getUuid()+", \"text\": \""+one.getMname()+"\", "
+						+ "\"classes\": \"folder\", \"hasChildren\": true},");
+			}
+		}else {
+			List<MenuModel> childs = menuEbi.listByMenu(getLoginEm().getUuid(), new Long(root));
+			for(MenuModel child: childs) {
+				temp.append("{\"text\": \"<a class='hei' target='main' "
+						+ "href='"+child.getMurl()+"'>"+child.getMname()+"</a>\"},");
+			}
+		}
+		temp.deleteCharAt(temp.length()-1);
+		temp.append("]");
+		pw.print(temp.toString());
+		return NONE;
+	}
 
 	public String list() {
 		setRecords(menuEbi.getCount(mqm));

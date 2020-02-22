@@ -18,7 +18,7 @@
 	    	<!-- 1.1确定文件位置 -->
 	    <property name="configLocation" value="classpath:hibernate/hibernate.cfg.xml"/>
 	    	<!-- 1.2配置hbm.xml映射文件，mappingDirectoryLocationd表示本地映射文件的目录 -->
-	    <property name="mappingDirectoryLocations" value="classpath:cn/itcast/erp/*/*/vo"/>
+	    <property name="mappingDirectoryLocations" value="classpath:cn/itcast/erp/**/vo"/>
 	</bean>
 	
 			<!-- 配置数据源 -->

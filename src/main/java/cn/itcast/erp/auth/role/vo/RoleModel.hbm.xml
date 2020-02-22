@@ -15,7 +15,7 @@
 	        <many-to-many column="resUuid" class="cn.itcast.erp.auth.res.vo.ResModel"/>
 	    </set>
 	    
-		<set name="mms" table="tbl_menu_role" inverse="true">
+		<set name="mms" table="tbl_menu_role">
 	        <key column="roleUuid"/>
 	        <many-to-many column="menuUuid" class="cn.itcast.erp.auth.menu.vo.MenuModel"/>
 	    </set>

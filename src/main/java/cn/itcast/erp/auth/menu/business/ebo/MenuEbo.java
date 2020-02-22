@@ -75,4 +75,12 @@ public class MenuEbo implements MenuEbi {
 	public List<MenuModel> listAsParent() {
 		return menuDao.listAsParent();
 	}
+
+	public List<MenuModel> listOne(Long empUuid) {
+		return menuDao.listOne(empUuid);
+	}
+
+	public List<MenuModel> listByMenu(Long empUuid, Long puuid) {
+		return menuDao.listByMenu(empUuid, puuid);
+	}
 }

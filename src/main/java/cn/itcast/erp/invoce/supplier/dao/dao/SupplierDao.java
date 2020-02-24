@@ -13,4 +13,10 @@ public interface SupplierDao extends BaseDao<SupplierModel>{
 	 */
 	public List<SupplierModel> getNotNull();
 
+	/**
+	 * 获取供应商包含类别、并且类别中包含商品的供应商列表
+	 * @return
+	 */
+	public List<SupplierModel> getNotNullAndGtm();
+
 }

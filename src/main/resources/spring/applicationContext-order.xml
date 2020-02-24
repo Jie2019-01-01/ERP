@@ -4,17 +4,18 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
-	<bean id="goodsTypeAction" class="cn.itcast.erp.invoce.goodstype.action.GoodsTypeAction" scope="prototype">
-		<property name="goodsTypeEbi" ref="goodsTypeEbi"/>
+	<bean id="orderAction" class="cn.itcast.erp.invoce.order.action.OrderAction" scope="prototype">
+		<property name="orderEbi" ref="orderEbi"/>
 		<property name="supplierEbi" ref="supplierEbi"/>
+		<property name="goodsTypeEbi" ref="goodsTypeEbi"/>
+		<property name="goodsEbi" ref="goodsEbi"/>
+	</bean>
+	
+	<bean id="orderEbi" class="cn.itcast.erp.invoce.order.business.ebo.OrderEbo">
+		<property name="orderDao" ref="orderDao"/>
 	</bean>
 
-	<bean id="goodsTypeEbi" class="cn.itcast.erp.invoce.goodstype.business.ebo.GoodsTypeEbo">
-		<property name="goodsTypeDao" ref="goodsTypeDao"/>
-		<property name="goodsDao" ref="goodsDao"/>
-	</bean>
-
-	<bean id="goodsTypeDao" class="cn.itcast.erp.invoce.goodstype.dao.impl.GoodsTypeImpl">
+	<bean id="orderDao" class="cn.itcast.erp.invoce.order.dao.impl.OrderImpl">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 </beans>

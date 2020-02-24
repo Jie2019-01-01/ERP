@@ -27,4 +27,9 @@ public class GoodsTypeImpl extends BaseImpl<GoodsTypeModel> implements GoodsType
 		return this.getHibernateTemplate().find(hql, uuid);
 	}
 
+	public List<GoodsTypeModel> getNotNullBySupplier(Long uuid) {
+		String hql = "select distinct g from GoodsModel gm join gm.gtm g where g.sm.uuid=?";
+		return this.getHibernateTemplate().find(hql, uuid);
+	}
+
 }

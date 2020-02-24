@@ -13,4 +13,10 @@ public interface SupplierEbi extends BaseEbi<SupplierModel>{
 	 */
 	public List<SupplierModel> getNotNull();
 
+	/**
+	 * 获取供应商中包含类别、同时类别又包含商品的供应商信息
+	 * @return
+	 */
+	public List<SupplierModel> getNotNullAndGtm();
+
 }

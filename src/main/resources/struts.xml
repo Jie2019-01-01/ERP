@@ -76,5 +76,47 @@
     		</result>
     	</action>
     	
+    		<!-- order -->
+    	<action name="order_*" class="orderAction" method="{1}">
+    		<result name="inList">/WEB-INF/jsps/order/in/inList.jsp</result>
+    		<result name="inInput">/WEB-INF/jsps/order/in/input.jsp</result>
+    		<result name="toInList" type="redirectAction">order_inList</result>
+    		<result name="ajaxGetGtmBySm" type="json">
+    			<param name="includeProperties">
+			        gtmList\[\d+\]\.uuid,
+			        gtmList\[\d+\]\.gtname,
+			        gmList\[\d+\]\.uuid,
+			        gmList\[\d+\]\.gname,
+			        gmList\[\d+\]\.inPriceView,
+			    </param>
+    		</result>
+    		<result name="ajaxGetGmByGtm" type="json">
+    			<param name="includeProperties">
+			        gmList\[\d+\]\.uuid,
+			        gmList\[\d+\]\.gname,
+			        gmList\[\d+\]\.inPriceView,
+			    </param>
+    		</result>
+    		<result name="ajaxGetGmByUuid" type="json">
+    			<param name="root">gm</param>
+    			<param name="includeProperties">
+    				inPriceView,
+    			</param>
+    		</result>
+    		<result name="ajaxGetGtmAndGm" type="json">
+    			<param name="includeProperties">
+			        gtmList\[\d+\]\.uuid,
+			        gtmList\[\d+\]\.gtname,
+			        gmList\[\d+\]\.uuid,
+			        gmList\[\d+\]\.gname,
+			        gmList\[\d+\]\.inPriceView,
+			    </param>
+    		</result>
+    	</action>
+    	
+    		<!-- orderDetail -->
+    	<action name="orderDetail_*" class="orderDetailAction" method="{1}">
+    	</action>
+    	
     </package>
 </struts>

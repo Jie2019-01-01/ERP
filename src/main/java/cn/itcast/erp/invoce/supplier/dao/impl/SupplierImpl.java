@@ -34,4 +34,9 @@ public class SupplierImpl extends BaseImpl<SupplierModel> implements SupplierDao
 		return this.getHibernateTemplate().find(hql);
 	}
 
+	public List<SupplierModel> getNotNullAndGtm() {
+		String hql = "select distinct sm from GoodsModel gm join gm.gtm gtm join gtm.sm sm";
+		return this.getHibernateTemplate().find(hql);
+	}
+
 }

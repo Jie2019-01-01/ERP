@@ -1,230 +1,221 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags"%>
-<link href="../../../css/index.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="../../../js/jquery-1.8.3.js"></script>
+<link href="css/index.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.8.3.js"></script>
 </script>
 <script type="text/javascript">
-	function intToFloat(val){
-		return new Number(val).toFixed(2);
-	}
-	//修改供应商
-	$(document).ready(function() {
-		$("#supplier").change(function(){
-				//修改产品类别select
-				$(".goodsType").empty();
-				for(var i = 0;i<4;i++){
-					var $option = $("<option value='1'>商品类别"+i+"</option>");	//创建option对象(jQuery格式)
-					$(".goodsType").append($option);				//将option对象添加到select组件中
-				}
-				//修改商品select
-				$(".goods").empty();
-				for(var i = 0;i<5;i++){
-					var $option = $("<option value='1'>商品名"+i+"</option>");	//创建option对象(jQuery格式)
-					$(".goods").append($option);				//将option对象添加到select组件中
-				}
-				//修改商品数量
-				$(".order_num").val("1");
-				//修改商品单价
-				$("[name='prices']").val(intToFloat(300));
-				//修改商品合计
-				$(".total").text(intToFloat(300)+" 元");
-				//修改商品总计
-				total();
+	$(function(){
+		// 提交表单
+		$('#submitOrder').click(function(){
+			// 解锁
+			$('.supplier').attr("disabled",false);
+			$('.goodsType').attr("disabled",false);
+			$('.goods').attr("disabled",false);
+			$('form:first').submit();
 		});
-		//修改商品类别
-		$(".goodsType").live("change",function(){
-			var $goodsSelectObj = $($(this).parent().next().children()[0]);
-			var $num = $($(this).parent().next().next().children()[0]);
-			var $price = $($(this).parent().next().next().next().children()[0]);
-			var $total = $(this).parent().next().next().next().next();
-			//发送的请求要将当前已经使用的过滤掉，否则每次出现的集合会重复
-			var jsonParam = {"gm.goodsType.uuid":$(this).val()};
-			var goodsUuids = "";
-			//取出所有select
-			var goodsObjs = $(".goods");
-			for(i = 0;i<goodsObjs.length;i++){
-				goodsUuids = goodsUuids + $(goodsObjs[i]).val();
-				if(i != goodsObjs.length -1){
-					goodsUuids = goodsUuids + ",";
+		
+		// 供应商
+		$('.supplier').change(function(){
+			var supplierUuid = $(this).val();
+			$.post('order_ajaxGetGtmBySm.action',{'supplierUuid':supplierUuid},function(data){
+				// 类别
+				$('.goodsType').empty();
+				var $gtmList = data.gtmList;
+				var $op = '';
+				for(var i=0; i<$gtmList.length; i++){
+					$op += '<option value="'+$gtmList[i].uuid+'">'+$gtmList[i].gtname+'</option>';
 				}
-			}
-			jsonParam["goodsUuids"]= goodsUuids;
+				$('.goodsType').append($op);
+				// 商品
+				$('.goods').empty();
+				var $gmList = data.gmList;
+				$op = '';
+				for(var i=0; i<$gmList.length; i++){
+					$op += '<option value="'+$gmList[i].uuid+'">'+$gmList[i].gname+'</option>';
+				}
+				$('.goods').append($op);
 				
-			$goodsSelectObj.empty();
-			for(var i = 0;i<5;i++){
-				var $option = $("<option value='222'>新商品名"+1+"</option>");	//创建option对象
-				$goodsSelectObj.append($option);				//将option对象添加到select组件中
-			}
-			//修改商品数量
-			$num.val("1");
-			//修改商品单价
-			$price.val(intToFloat(400));
-			//修改商品合计
-			$total.text(intToFloat(400)+" 元");
-			//修改商品总计
-			total();
+				$('.num').val(1);
+				$('.prices').val($gmList[0].inPriceView);
+				setTotal($('.total').parent());
+				setAll();
+			});
 		});
-		//修改商品
-		$(".goods").live("change",function(){
-			var $num = $($(this).parent().next().children()[0]);
-			var $price = $($(this).parent().next().next().children()[0]);
-			var $total = $(this).parent().next().next().next();
+		
+		// 类别
+		$('.goodsType').live('change',function(){
+			var $tr = $(this).parent().parent();
+			var gtmUuid = $(this).val();
+			// 获取已使用的商品uuid
+			var used = '';
+			$('.goods').each(function(){
+				used += $(this).val()+',';
+			});
+			$.post('order_ajaxGetGmByGtm',{'gtmUuid':gtmUuid,'used':used},function(data){
+				$tr.children('td:eq(1)').empty();
+				var $gmList = data.gmList;
+				var $select = $('<select name="" class="goods" style="width:200px">');
+				var $op = '';
+				for(var i=0; i<$gmList.length; i++){
+					$op += '<option value="'+$gmList[i].uuid+'">'+$gmList[i].gname+'</option>';
+				}
+				$select.append($op);
+				$tr.children('td:eq(1)').append($select);
+				// 设置单价和数量
+				$tr.children('td:eq(2)').children('input').val(1);
+				$tr.children('td:eq(3)').children('input').val($gmList[0].inPriceView);
+				setTotal($tr);
+				setAll();
+			});
+		});
+		
+		// 商品
+		$('.goods').live('change',function(){
+			var $tr = $(this).parent().parent();
+			$goodsUuid = $(this).val();
+			$.post('order_ajaxGetGmByUuid',{'goodsUuid':$goodsUuid},function(data){
+				// 设置单价和数量
+				$tr.children('td:eq(2)').children('input').val(1);
+				$tr.children('td:eq(3)').children('input').val(data.inPriceView);
+				setTotal($tr);
+				setAll();
+			});
+		});
+		
+		// 上锁
+		var flag = true;
+		// 新建
+		$('#add').click(function(){
+
+
+			$('.supplier').attr("disabled",true);
+			$('.goodsType').attr("disabled",true);
+			$('.goods').attr("disabled",true);
 			
-			//修改商品数量
-			$num.val("1");
-			//修改商品单价
-			$price.val(intToFloat(111));
-			//修改商品合计
-			$total.text(intToFloat(111)+" 元");
-			//修改商品总计
-			total();
-		});
-		//添加新商品
-		$("#add").click(function(){
-			//设置不能修改供应商
-			$("#supplier").attr("disabled","disabled");
-			//设置已存在的所有select全部不可点击
-			$(".goodsType").attr("disabled","disabled");
-			$(".goods").attr("disabled","disabled");
-			
-			//发送ajax提交，将供应商id与当前已经使用的类别对应商品2个id传递到后台，并将其过滤，过滤完毕的数据传递回页面
-			var goodsTypeObjs = $(".goodsType");
-			var goodsObjs = $(".goods");
-			var jsonParam = {"gm.goodsType.supplier.uuid":$("#supplier").val()};
-			var hasUuids = "";
-			for(i = 0;i<goodsTypeObjs.length;i++){
-				hasUuids = hasUuids + $(goodsTypeObjs[i]).val();
-				hasUuids = hasUuids + ":";
-				hasUuids = hasUuids + $(goodsObjs[i]).val();
-				if(i != goodsTypeObjs.length -1){
-					hasUuids = hasUuids + ",";
-				}
+			if(!flag) {
+				alert('频率过快..');
+				return 
 			}
-			jsonParam["hasUuids"]= hasUuids;
-				
-				//动态添加一个tr行
-				//创建tr组件
-				var $tr = $("<tr></tr>");
-				
-				//创建td组件，生成商品类别select
-				var typeSelectStr = "<select class='goodsType' style='width:200px'>";
-				for(i = 0;i<4;i++){
-					typeSelectStr+="<option value='";
-					typeSelectStr+=111;
-					typeSelectStr+="'>";
-					typeSelectStr+="类别名称"+i;
-					typeSelectStr+="</option>";
+			flag = false;
+			
+			var $tr = $('<tr align="center" bgcolor="#FFFFFF"></tr>');
+			
+			var $td1 = $('<td height="30"></td>');
+			var $select = $('<select name="" class="goodsType" style="width:200px"></select>');
+			// 获取商品的uuid数组
+			var $gm = $('.goods');
+			var used = '';
+			for(var i=0; i<$gm.length; i++){
+				used += $gm[i].value+",";
+			}
+			// 访问后台，过滤数据
+			$.post('order_ajaxGetGtmAndGm.action',{'supplierUuid':$('.supplier').val(),'used':used},function(data){
+				var $gtmList = data.gtmList;
+				for(var i=0; i<$gtmList.length; i++){
+					$op = ('<option value="'+$gtmList[i].uuid+'">'+$gtmList[i].gtname+'</option>');
+					$select.append($op);
 				}
-				typeSelectStr += "</select>";
-				var $td1 = $("<td height='30'>"+typeSelectStr+"</td>");
+				$td1.append($select);
 				$tr.append($td1);
 				
-				//创建td组件，生成商品select
-				var goodsSelectStr = "<select name='gmUuids' class='goods' style='width:200px'>";
-				for(i = 0;i<4;i++){
-					goodsSelectStr+="<option value='";
-					goodsSelectStr+=123;
-					goodsSelectStr+="'>";
-					goodsSelectStr+="新商品名"+i;
-					goodsSelectStr+="</option>";
+				var $gmList = data.gmList;
+				var $td2 = $('<td></td>');
+				$select = $('<select name="goodsUuids" class="goods" style="width:200px"></select>');
+				if($gmList==null) return;
+				for(var i=0; i<$gmList.length; i++){
+					$op = ('<option value="'+$gmList[i].uuid+'">'+$gmList[i].gname+'</option>');
+					$select.append($op);
 				}
-				goodsSelectStr += "</select>";
-				var $td2 = $("<td>"+goodsSelectStr+"</td>");
+				$td2.append($select);
 				$tr.append($td2);
 				
-				//创建td组件，生成商品数量input，默认值1
-				var $td3 = $("<td>&nbsp;<input name='nums' type='text' value='1' class='num order_num' style='width:67px;border:1px solid black;text-align:right;padding:2px' /></td>");
+				var $td3 = $('<td><input name="nums" class="num order_num" style="width:67px;border:1px solid black;text-align:right;padding:2px" type="text" value="1"></td>');
 				$tr.append($td3);
 				
-				var $td4 = $("<td style='padding-left:4px'><input name='prices' type='text' value='"+222+"' class='prices order_num' style='width:93px;border:1px solid black;text-align:right;padding:2px' /> 元</td>");
+				var $td4 = $('<td><input name="prices" class="prices order_num" style="width:93px;border:1px solid black;text-align:right;padding:2px" type="text" value="'+$gmList[0].inPriceView+'"> 元</td>');
 				$tr.append($td4);
 				
-				var $td5 = $("<td class='total' align='right'>"+222+" 元</td>");
+				var $td5 = $('<td class="total" align="right">'+$gmList[0].inPriceView+'&nbsp;元</td>');
 				$tr.append($td5);
 				
-				var $td6 = $("<td>&nbsp;&nbsp;<a class='deleteBtn delete xiu' value='"+112+"'><img src='../../../images/icon_04.gif'/> 删除</a></td>");
+				var $td6 = $('<td><a class="deleteBtn delete xiu" value="4"><img src="images/icon_04.gif"> 删除</a></td>');
 				$tr.append($td6);
 				
-				//在最后一个tr对象前添加该tr组件
-				$("#finalTr").before($tr);
-				//注意：新添加的元素是否具有动态事件激活能力
+				$('#finalTr').before($tr);
+				setAll();
 				
-				//获取后台数据是否还有下一个可用的商品，判断添加按钮是否显示
-				if("Y" == "N"){
-					//将添加按钮设置为不可显示
-					$("#add").css("display","none");
-				}
-				total();
+			});
+			
+			flag = true;
 		});
-		//修改商品数量，事件绑定为点击任意键盘数字按钮
-		$(".num").live("keyup",function(event){
-			//事件激活方式为任意键盘数字按钮，避免用户输入非法数字
-			if(event.keyCode>=48 && event.keyCode<=57 || event.keyCode>=96 && event.keyCode<=105 || event.keyCode == 8){
-				//获取当前输入数量值
-				var num = $(this).val();
-				//获取当前价格
-				var price = $($(this).parent().next().children()[0]).val();
-				$(this).parent().next().next().text(intToFloat(num*price)+" 元");
-				total();
-				return true;
+		
+		// 删除一条
+		$('.deleteBtn').live('click',function(){
+			if($('.deleteBtn').length>1){
+				var $tr = $(this).parent().parent();
+				$tr.remove();
+				setAll();
+			}else{
+				alert('不要再删了...');
 			}
-			return false;
 		});
-		//修改商品价格，事件绑定为点击任意键盘数字按钮
-		$(".prices").live("keyup",function(event){
-			//先把非数字的都替换掉，除了数字和. 
-			$(this).val($(this).val().replace(/[^\d.]/g,""));
-	        //必须保证第一个为数字而不是. 
-	        $(this).val($(this).val().replace(/^\./g,"0."));
-	        //保证只有出现一个.而没有多个. 
-	        $(this).val($(this).val().replace(/\.{2,}/g,"."));
-	        //保证.只出现一次，而不能出现两次以上
-	        $(this).val($(this).val().replace(".","$#$").replace(/\./g,"").replace("$#$",".")); 
+		
+		// 采购数量
+		$('.num').live('keyup',function(){
+			$tr = $(this).parent().parent();
+			format_input_num2($(this));
+			setTotal($tr);
+		});
+		// 单价
+		$('.prices').live('keyup',function(){
+			$tr = $(this).parent().parent();
+			format_input_num($(this));
+			setTotal($tr);
+		});
+		
+		// 设置合计
+		function setTotal(obj){
+			var $num = $(obj).children('td:eq(2)').children('input').val();
+			var $price = $(obj).children('td:eq(3)').children('input').val();
+			$(obj).children('td:eq(4)').html(toFixed($num*$price)+' 元');
+			setAll();
+		}
 
-	        //获取当前输入价格
-			var price = $(this).val();
-			//获取当前数量
-			var num = $($(this).parent().prev().children()[0]).val();
-			//求合计
-			$(this).parent().next().text(intToFloat(num*price)+" 元");
-			//求总计
-			total();
-		});
-		
-		$(".deleteBtn").live("click",function(){
-			if($(".deleteBtn").size()>1){
-				//获取当前所在行，并将其删除
-				$(this).parent().parent().remove();
-				//将添加按钮设置为可显示状态
-				$("#add").css("display","inline");
-			}
-			//将所有项设置为不可修改
-			$(".goodsType").attr("disabled","disabled");
-			$(".goods").attr("disabled","disabled");
-			total();
-		});
-		
-		//求总和的方法
-		function total(){
-			var nums = $(".num");
-			var prices = $(".prices");
-			var total = 0;
-			for(var i = 0;i<nums.length;i++){
-				var num = $(nums[i]).val();
-				var price=  $(prices[i]).val();
-				total = total + num * price ;
-			}
-			$(".all").text(intToFloat(total)+" 元");
+		// 设置总计
+		function setAll(){
+			var sum = 0;
+			$('.num').each(function(){
+				var $tr = $(this).parent().parent();
+				var $price = $tr.children('td:eq(3)').children('input').val();
+				var $all = $(this).val() * $price;
+				sum += $all;
+			});
+			$('.all').html(toFixed(sum)+' 元');
 		}
 		
-		//提交按钮（设置不可修改的
-		$("#submitOrder").click(function(){
-			$("#supplier").removeAttr("disabled");
-			$(".goods").removeAttr("disabled");
-			//提交页面中的第一个form对象
-			$("form:first").submit();
-		});
+		function format_input_num(obj){
+		   // 清除"数字"和"."以外的字符
+		   obj.val(obj.val().replace(/[^\d.]/g,""));
+		   // 验证第一个字符是数字
+		   obj.val(obj.val().replace(/^\./g,""));
+		   // 只保留第一个, 清除多余的
+		   obj.val(obj.val().replace(/\.{2,}/g,"."));
+		   obj.val(obj.val().replace(".","$#$").replace(/\./g,"").replace("$#$","."));
+		   // 只能输入两个小数
+		   obj.val(obj.val().replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3'));
+		}
+		
+		function format_input_num2(obj){
+		   // 清除"数字"和"."以外的字符
+		   obj.val(obj.val().replace(/[^\d]/g,""));
+		   //第一位数字不能为0
+		   obj.val(obj.val().replace(/^[0]+[0-9]*$/gi, "")); 
+		}
+
+		function toFixed(num){
+			return (Number(num)).toFixed(2);
+		}
 	});
 </script>
 <div class="content-right">
@@ -234,7 +225,7 @@
 		</div>
 	</div>
 	<div class="content-text">
-		<form action="inList.jsp" method="post">
+		<s:form action="order_inSave.action" method="post">
 			<div class="square-o-top">
 				<table width="100%" border="0" cellpadding="0" cellspacing="0"
 					style="font-size:14px; font-weight:bold; font-family:"黑体";">
@@ -244,13 +235,11 @@
 					<tr>
 						<td width="68px" height="30">供应商：</td>
 						<td width="648px">
-							 <select class="kuan" style="width:190px">
-								<option value="1">七匹狼</option>
-								<option value="0">康师傅</option>
-							</select>
+							<s:select cssClass="kuan supplier" list="supplierList" cssStyle="width:190px"
+								listKey="uuid" listValue="sname" name="om.sm.uuid"/>
 						</td>
 						<td height="30">
-							<a id="add"><img src="../../../images/can_b_02.gif" border="0" /> </a>
+							<a id="add"><img src="images/can_b_02.gif" border="0" /> </a>
 						</td>
 					</tr>
 				</table>
@@ -259,7 +248,7 @@
 			<div class="square-order">
 				<table id="order" width="100%" border="1" cellpadding="0" cellspacing="0">
 					<tr align="center"
-						style="background:url(../../../images/table_bg.gif) repeat-x;">
+						style="background:url(images/table_bg.gif) repeat-x;">
 						<td width="25%" height="30">商品类别</td>
 						<td width="25%">商品名称</td>
 						<td width="10%">采购数量</td>
@@ -269,28 +258,31 @@
 					</tr>
 					<tr align="center" bgcolor="#FFFFFF">
 						<td height="30">
-							<select class="goodsType" style="width:200px">
-								<option value="1">上衣</option>
-								<option value="0">秋裤</option>
-							</select>
+							<s:select cssClass="goodsType" list="gtmList" cssStyle="width:200px"
+								listKey="uuid" listValue="gtname"/>
 						</td>
 						<td>
-							<select class="goods" style="width:200px">
-								<option value="1">绿色纯棉加厚</option>
-								<option value="0">黄色纯棉加厚</option>
-							</select>
+							<s:select cssClass="goods" list="gmList" cssStyle="width:200px"
+								listKey="uuid" listValue="gname" name="goodsUuids"/>
 						</td>
-						<td><input name="nums" class="num order_num" style="width:67px;border:1px solid black;text-align:right;padding:2px" type="text" value="1"/></td>
-						<td><input name="prices" class="prices order_num" style="width:93px;border:1px solid black;text-align:right;padding:2px" type="text" value="100"/> 元</td>
-						<td class="total" align="right">100.00&nbsp;元</td>
+						<td><s:textfield name="nums" cssClass="num order_num" 
+								cssStyle="width:67px;border:1px solid black;text-align:right;padding:2px" 
+								value="1"/>
+						</td>
 						<td>
-							<a class="deleteBtn delete xiu" value="4"><img src="../../../images/icon_04.gif" /> 删除</a>
+							<s:textfield name="prices" cssClass="prices order_num" 
+								cssStyle="width:93px;border:1px solid black;text-align:right;padding:2px" 
+								value="%{#gmList[0].inPriceView}"></s:textfield> 元
+						</td>
+						<td class="total" align="right">${gmList.get(0).inPriceView }&nbsp;元</td>
+						<td>
+							<a class="deleteBtn delete xiu" value="4"><img src="images/icon_04.gif" /> 删除</a>
 						</td>
 					</tr>
 					<tr id="finalTr" align="center"
-						style="background:url(../../../images/table_bg.gif) repeat-x;">
+						style="background:url(images/table_bg.gif) repeat-x;">
 						<td height="30" colspan="4" align="right">总&nbsp;计:&nbsp;</td>
-						<td class="all" width="16%" align="right">100.00&nbsp;元</td>
+						<td class="all" width="16%" align="right">${gmList.get(0).inPriceView }&nbsp;元</td>
 						<td>&nbsp;</td>
 					</tr>
 				</table>
@@ -299,18 +291,18 @@
 					<table width="100%"  border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td>
-					    	<a href="javascript:void(0)" id="submitOrder"><img src="../../../images/order_tuo.gif" border="0" /></a>
+					    	<a href="javascript:void(0)" id="submitOrder"><img src="images/order_tuo.gif" border="0" /></a>
 					    </td>
 					    <td>&nbsp;</td>
-					    <td><a href="#"><img src="../../../images/order_tuo.gif" border="0" /></a></td>
+					    <td><a href="#"><img src="images/order_tuo.gif" border="0" /></a></td>
 					    <td>&nbsp;</td>
-					    <td><a href="#"><img src="../../../images/order_tuo.gif" border="0" /></a></td>
+					    <td><a href="#"><img src="images/order_tuo.gif" border="0" /></a></td>
 					  </tr>
 					</table>
 				</div>
 			</div>
 			</div>
-		</form>
+		</s:form>
 	</div>
 	
 	<div class="content-bbg"></div>

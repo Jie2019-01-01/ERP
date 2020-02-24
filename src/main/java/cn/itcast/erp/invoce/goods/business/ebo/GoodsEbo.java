@@ -41,4 +41,8 @@ public class GoodsEbo implements GoodsEbi {
 		return goodsDao.getCount(bqm);
 	}
 
+	public List<GoodsModel> getByGtm(Long uuid) {
+		return goodsDao.getByGtm(uuid);
+	}
+
 }

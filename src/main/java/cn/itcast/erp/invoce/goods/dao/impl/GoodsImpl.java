@@ -1,5 +1,7 @@
 package cn.itcast.erp.invoce.goods.dao.impl;
 
+import java.util.List;
+
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import cn.itcast.erp.invoce.goods.dao.dao.GoodsDao;
@@ -39,6 +41,11 @@ public class GoodsImpl extends BaseImpl<GoodsModel> implements GoodsDao {
 		if(gqm.getOutMaxPrice()!=null) {
 			dc.add(Restrictions.le("outPrice", gqm.getOutMaxPrice()));
 		}
+	}
+
+	public List<GoodsModel> getByGtm(Long uuid) {
+		String hql = "from GoodsModel where gtm.uuid=?";
+		return this.getHibernateTemplate().find(hql, uuid);
 	}
 
 }

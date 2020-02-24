@@ -4,7 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 
-import cn.itcast.erp.invoce.goods.vo.GoodsModel;
+import cn.itcast.erp.invoce.orderdetail.vo.OrderDetailModel;
 
 public class CodeGenerator {
 
@@ -19,7 +19,7 @@ public class CodeGenerator {
 	
 	public static void main(String[] args) throws Exception {
 		//资源初始化DepModel
-		dataInit(GoodsModel.class);
+		dataInit(OrderDetailModel.class);
 		createDirs();
 		QueryModel();
 		dao();

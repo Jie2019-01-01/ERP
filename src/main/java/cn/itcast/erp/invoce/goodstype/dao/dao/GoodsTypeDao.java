@@ -14,4 +14,7 @@ public interface GoodsTypeDao extends BaseDao<GoodsTypeModel>{
 	 */
 	public List<GoodsTypeModel> getBySupplier(Long uuid);
 
+	
+	public List<GoodsTypeModel> getNotNullBySupplier(Long uuid);
+
 }

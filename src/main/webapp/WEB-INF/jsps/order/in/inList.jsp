@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags"%>
-<link href="../../../css/index.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="../../../js/jquery-1.8.3.js"></script>
-<script type="text/javascript" src="../../../js/Calendar.js"></script>
+<link href="css/index.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.8.3.js"></script>
+<script type="text/javascript" src="js/Calendar.js"></script>
 <script type="text/javascript">
 	$(function() {
 		$("#query").click(function() {
-			$("[name='pageNum']").val(1);
+			$("[name='curPage']").val(1);
 			$("form:first").submit();
 		});
 	});
@@ -41,7 +41,7 @@
 						<td>到 </td>
 						<td>&nbsp;&nbsp;<input type="text" size="14" /></td>
 						<td><a id="query"> 
-							<img src="../../../images/can_b_01.gif" border="0" /> </a>
+							<img src="images/can_b_01.gif" border="0" /> </a>
 						</td>
 					</tr>
 					<tr>
@@ -58,8 +58,8 @@
 						<td>到</td>
 						<td>&nbsp;&nbsp;<input type="text" size="14" /></td>
 						<td>
-							<a href="./input.jsp">
-								<img src="../../../images/can_b_02.gif" border="0" /> 
+							<a href="order_inInput.action">
+								<img src="images/can_b_02.gif" border="0" /> 
 							</a>
 						</td>
 					</tr>
@@ -69,9 +69,9 @@
 			<div class="square-order">
 				<table width="100%" border="1" cellpadding="0" cellspacing="0">
 					<tr align="center"
-						style="background:url(../../../images/table_bg.gif) repeat-x;">
-						<td width="25%" height="30">订单号</td>
-						<td width="9%">供应商</td>
+						style="background:url(images/table_bg.gif) repeat-x;">
+						<td width="15%" height="30">订单号</td>
+						<td width="19%">供应商</td>
 						<td width="10%">制单人</td>
 						<td width="20%">制单时间</td>
 						<td width="10%">订单商品总量</td>
@@ -79,18 +79,20 @@
 						<td width="5%">详情</td>
 						<td width="9%">订单状态</td>
 					</tr>
-					<tr align="center" bgcolor="#FFFFFF">
-						<td width="13%" height="30">32478dhyfjahfajd32</td>
-						<td>七匹狼</td>
-						<td>张三</td>
-						<td>2014-9-29</td>
-						<td>188</td>
-						<td align="right">788.04 元</td>
-						<td>
-							<a href="inDetailList.jsp" class="xiu">详情</a>
-						</td>
-						<td>未审核</td>
-					</tr>
+					<s:iterator value="orderList">
+						<tr align="center" bgcolor="#FFFFFF">
+							<td width="13%" height="30">${orderNum }</td>
+							<td>${sm.sname }</td>
+							<td>${creater.realName }</td>
+							<td>${createTimeView }</td>
+							<td>${totalCount }</td>
+							<td align="right">${totalPriceView } 元</td>
+							<td>
+								<a href="inDetailList.jsp" class="xiu">详情</a>
+							</td>
+							<td>${statusView}</td>
+						</tr>
+					</s:iterator>
 				</table>
 			</div>
 		</form>

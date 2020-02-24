@@ -45,4 +45,8 @@ public class SupplierEbo implements SupplierEbi {
 		return supplierDao.getNotNull();
 	}
 
+	public List<SupplierModel> getNotNullAndGtm() {
+		return supplierDao.getNotNullAndGtm();
+	}
+
 }

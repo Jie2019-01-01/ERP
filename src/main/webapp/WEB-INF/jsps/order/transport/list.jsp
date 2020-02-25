@@ -113,6 +113,7 @@
 						</tr>
 					</s:iterator>
 				</table>
+				<s:include value="../../tools/paging.jsp"/>
 			</div>
 		</s:form>
 	</div>

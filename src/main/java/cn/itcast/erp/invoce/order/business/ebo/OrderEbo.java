@@ -162,4 +162,24 @@ public class OrderEbo implements OrderEbi {
 		om.setStatus(OrderModel.ORDER_STATUS_OF_BUY_BUYING);
 	}
 
+	public Integer getQueryTaskCount(OrderQueryModel oqm, EmpModel completer) {
+		// 结单人设置为当前登录人
+		oqm.setCompleter(completer);
+		return orderDao.getCount(oqm);
+	}
+
+	public List<OrderModel> queryTaskList(OrderQueryModel oqm, Integer curPage, Integer pageCount, EmpModel completer) {
+		// 结单人设置为当前登录人
+		oqm.setCompleter(completer);
+		return orderDao.list(oqm, curPage, pageCount);
+	}
+
+	public void endTask(Long uuid) {
+		OrderModel om = orderDao.getByUuid(uuid);
+		if(om.getStatus().intValue()!=OrderModel.ORDER_STATUS_OF_BUY_BUYING.intValue()) {
+			throw new AppException("对不起，请不要进行非法操作!!");
+		}
+		// 订单状态==》“入库中”
+		om.setStatus(OrderModel.ORDER_STATUS_OF_BUY_IN_STORE);
+	}
 }

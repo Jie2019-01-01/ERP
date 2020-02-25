@@ -64,4 +64,29 @@ public interface OrderEbi extends BaseEbi<OrderModel>{
 	 */
 	public void assignTaskMan(Long uuid, EmpModel completer);
 
+	/**
+	 * 任务查询显示的订单数量
+	 * @param oqm
+	 * @param completer 跟单人，即当前登录人
+	 * @return
+	 */
+	public Integer getQueryTaskCount(OrderQueryModel oqm, EmpModel completer);
+
+	/**
+	 * 任务查询中的订单列表
+	 * @param oqm
+	 * @param curPage
+	 * @param pageCount
+	 * @param completer 跟单人，即当前登录人
+	 * @return
+	 */
+	public List<OrderModel> queryTaskList(OrderQueryModel oqm, Integer curPage, 
+			Integer pageCount, EmpModel completer);
+
+	/**
+	 * 订单任务结束
+	 * @param uuid 订单uuid
+	 */
+	public void endTask(Long uuid);
+
 }

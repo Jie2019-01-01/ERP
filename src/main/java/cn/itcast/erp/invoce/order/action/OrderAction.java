@@ -125,8 +125,23 @@ public class OrderAction extends BaseAction{
 		orderEbi.assignTaskMan(om.getUuid(), em);
 		return "assignTaskMan";
 	}
-	
-	
+	//----------------任务查询----------------------
+	public String queryList() {
+		Integer records = orderEbi.getQueryTaskCount(oqm, getLoginEm());
+		setRecords(records);
+		List<OrderModel> orderList = orderEbi.queryTaskList(oqm, curPage, pageCount, getLoginEm());
+		put("orderList", orderList);
+		return "queryList";
+	}
+	public String queryDetail() {
+		om = orderEbi.getByUuid(om.getUuid());
+		return "queryDetail";
+	}
+	// 结单
+	public String endTask() {
+		orderEbi.endTask(om.getUuid());
+		return "toQueryList";
+	}
 	
 	
 	

@@ -41,6 +41,10 @@ public class OrderImpl extends BaseImpl<OrderModel> implements OrderDao {
 			dc.createAlias("completer", "c3");
 			dc.add(Restrictions.like("c3.realName", "%"+oqm.getCompleter().getRealName()+"%"));
 		}
+		if(oqm.getCompleter()!=null && oqm.getCompleter().getUuid()!=null 
+				&& oqm.getCompleter().getUuid()!=-1) {
+			dc.add(Restrictions.eq("completer", oqm.getCompleter()));
+		}
 		// 总数量范围
 		if(oqm.getTotalCount()!=null) {
 			dc.add(Restrictions.ge("totalCount", oqm.getTotalCount()));

@@ -42,7 +42,7 @@ public class OrderModel {
 	public static final Integer ORDER_STATUS_OF_BUY_PASS = 121;
 	public static final Integer ORDER_STATUS_OF_BUY_NO_PASS = 120;
 	public static final Integer ORDER_STATUS_OF_BUY_BUYING = 131;
-	public static final Integer ORDER_STATUS_OF_BUY_IN_STORE = 131;
+	public static final Integer ORDER_STATUS_OF_BUY_IN_STORE = 141;
 	public static final Integer ORDER_STATUS_OF_BUY_COMPLETE = 199;
 	// 销售
 	public static final Integer ORDER_STATUS_OF_SALE_NO_CHECK = 211;

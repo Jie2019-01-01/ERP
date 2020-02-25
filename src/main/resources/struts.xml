@@ -79,6 +79,7 @@
     		<!-- order -->
     	<action name="order_*" class="orderAction" method="{1}">
     		<result name="inList">/WEB-INF/jsps/order/in/inList.jsp</result>
+    		<result name="inDetailList">/WEB-INF/jsps/order/in/inDetailList.jsp</result>
     		<result name="inInput">/WEB-INF/jsps/order/in/input.jsp</result>
     		<result name="toInList" type="redirectAction">order_inList</result>
     		<result name="ajaxGetGtmBySm" type="json">
@@ -116,6 +117,7 @@
     	
     		<!-- orderDetail -->
     	<action name="orderDetail_*" class="orderDetailAction" method="{1}">
+    		<result name="inList">/WEB-INF/jsps/order/in/inDetailList.jsp</result>
     	</action>
     	
     </package>

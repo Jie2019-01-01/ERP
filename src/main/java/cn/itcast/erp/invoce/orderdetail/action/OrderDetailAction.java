@@ -13,33 +13,12 @@ public class OrderDetailAction extends BaseAction{
 
 	public OrderDetailModel om = new OrderDetailModel();
 	public OrderDetailQueryModel oqm = new OrderDetailQueryModel();
-
-	public String list() {
+	
+	public String inList() {
 		setRecords(orderDetailEbi.getCount(oqm));
 		List<OrderDetailModel> orderDetailList = orderDetailEbi.list(oqm, curPage, pageCount);
 		put("orderDetailList", orderDetailList);
-		return "list";
-	}
-
-	public String input() {
-		if(om.getUuid()!=null) {
-			om = orderDetailEbi.getByUuid(om.getUuid());
-		}
-		return "input";
-	}
-
-	public String saveOrUpdate() {
-		if(om.getUuid()!=null) {
-			orderDetailEbi.update(om);
-		}else {
-			orderDetailEbi.save(om);
-		}
-		return "toList";
-	}
-
-	public String delete() {
-		orderDetailEbi.delete(om);
-		return "toList";
+		return "inList";
 	}
 
 }

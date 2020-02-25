@@ -35,6 +35,12 @@ public class OrderAction extends BaseAction{
 		
 		return "inList";
 	}
+	
+	public String inDetailList() {
+		// 根据uuid查询订单
+		om = orderEbi.getByUuid(om.getUuid());
+		return "inDetailList";
+	}
 
 	public String inInput() {
 //		if(om.getUuid()!=null) {

@@ -86,7 +86,10 @@
 							<td>${totalCount }</td>
 							<td align="right">${totalPriceView } 元</td>
 							<td>
-								<a href="inDetailList.jsp" class="xiu">详情</a>
+								<s:a action="order_inDetailList.action" cssClass="xiu">
+									详情
+									<s:param name="om.uuid" value="uuid"/>
+								</s:a>
 							</td>
 							<td>${statusView}</td>
 						</tr>

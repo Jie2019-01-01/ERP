@@ -28,4 +28,6 @@ public interface EmpEbi {
 	public void update(EmpModel em, Long[] roles);
 
 	public void save(EmpModel em, Long[] roles);
+
+	public List<EmpModel> getByDep(Long depUuid);
 }

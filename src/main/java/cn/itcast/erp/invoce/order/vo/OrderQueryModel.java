@@ -9,6 +9,8 @@ public class OrderQueryModel extends OrderModel implements BaseQueryModel{
 	private Double MaxTotalPrice;
 	private Long maxCreateTime;
 	private String maxCreateTimeView;
+	private Long maxCheckTime;
+	private String maxCheckTimeView;
 	
 	public Integer getMaxTotalCount() {
 		return MaxTotalCount;
@@ -31,5 +33,15 @@ public class OrderQueryModel extends OrderModel implements BaseQueryModel{
 	}
 	public String getMaxCreateTimeView() {
 		return maxCreateTimeView;
+	}
+	public Long getMaxCheckTime() {
+		return maxCheckTime;
+	}
+	public void setMaxCheckTime(Long maxCheckTime) {
+		this.maxCheckTime = maxCheckTime;
+		this.maxCheckTimeView = FormatUtil.formatDate(maxCheckTime);
+	}
+	public String getMaxCheckTimeView() {
+		return maxCheckTimeView;
 	}
 }

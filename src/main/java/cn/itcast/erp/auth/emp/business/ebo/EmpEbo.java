@@ -116,4 +116,8 @@ public class EmpEbo implements EmpEbi {
 		em.setRms(rms);
 		empDao.save(em);
 	}
+
+	public List<EmpModel> getByDep(Long depUuid) {
+		return empDao.getByDep(depUuid);
+	}
 }

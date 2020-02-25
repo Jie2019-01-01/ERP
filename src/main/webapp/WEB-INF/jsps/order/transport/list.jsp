@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags"%>
-<link href="../../../css/index.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="../../../js/jquery-1.8.3.js"></script>
-<script type="text/javascript" src="../../../js/Calendar.js"></script>
+<link href="css/index.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.8.3.js"></script>
+<script type="text/javascript" src="js/Calendar.js"></script>
 <script type="text/javascript">
 	$(function() {
 		$("#query").click(function() {
-			$("[name='pageNum']").val(1);
+			$("[name='curPage']").val(1);
 			$("form:first").submit();
 		});
 	});
@@ -19,55 +19,57 @@
 		</div>
 	</div>
 	<div class="content-text">
-		<form action="list.jsp" method="post"> 
+		<s:form action="order_taskList.action" method="post"> 
 			<div class="square-o-top">
 				<table width="100%" border="0" cellpadding="0" cellspacing="0"
 					style="font-size:14px; font-weight:bold; font-family:"黑体";">
 					<tr>
 						<td>下单时间:</td>
 						<td>
-							<input type="text" size="10" onfocus="c.showMoreDay=false;c.show(this);" readonly="true"/>
+							<input type="text" size="10" onfocus="c.showMoreDay=false;c.show(this);" 
+								readonly="true" value="${oqm.createTimeView }"/>
+							<s:hidden name="oqm.createTime"/>
 						</td>
 						<td>到&nbsp;</td>
 						<td>
-							<input type="text" size="10" onfocus="c.showMoreDay=false;c.show(this);" readonly="true"/>
+							<input type="text" size="10" onfocus="c.showMoreDay=false;c.show(this);" 
+								readonly="true" value="${oqm.maxCreateTimeView }"/>
+							<s:hidden name="oqm.maxCreateTime"/>
 						</td>
 						<td>供&nbsp;应&nbsp;商:</td>
 						<td>
-							<select style="width:115px">
-								<option value="-1">----请-选-择----</option>
-								<option value="1">七匹狼</option>
-								<option value="0">康师傅</option>
-							</select>
+							<s:select list="suppliserList" listKey="uuid" listValue="sname" name="oqm.sm.uuid"
+								headerKey="-1" headerValue="---请-选-择---" cssStyle="width:115px"/>
 						</td>
 						<td>下单人:</td>
-						<td><input type="text" size="10" /></td>
+						<td><s:textfield name="oqm.creater.realName" size="10" /></td>
 						<td>&nbsp;</td>
 						<td><a id="query"> 
-							<img src="../../../images/can_b_01.gif" border="0" /> </a>
+							<img src="images/can_b_01.gif" border="0" /> </a>
 						</td>
 					</tr>
 					<tr>
 						<td>审核时间:</td>
 						<td>
-							<input type="text" size="10" onfocus="c.showMoreDay=false;c.show(this);" readonly="true"/>
+							<input type="text" size="10" onfocus="c.showMoreDay=false;c.show(this);" 
+								readonly="true" value="${oqm.checkTimeView }"/>
+							<s:hidden name="oqm.checkTime"/>
 						</td>
 						<td>到&nbsp;</td>
 						<td>
-							<input type="text" size="10" onfocus="c.showMoreDay=false;c.show(this);" readonly="true"/>
+							<input type="text" size="10" onfocus="c.showMoreDay=false;c.show(this);" 
+								readonly="true" value="${oqm.maxCheckTimeView }"/>
+							<s:hidden name="oqm.maxCheckTime"/>
 						</td>
 						<td>发货方式:</td>
 						<td>
-							<select style="width:115px">
-								<option value="-1">----请-选-择----</option>
-								<option value="1">送货</option>
-								<option value="0">自提</option>
-							</select> 
+							<s:select list="@cn.itcast.erp.invoce.supplier.vo.SupplierModel@patternMap" 
+								cssStyle="width:115px" headerKey="-1" headerValue="---请-选-择---" name="oqm.sm.pattern"/>
 						</td>
 						<td>审核人:</td>
-						<td><input type="text" size="10" /></td>
+						<td><s:textfield name="oqm.checker.realName" size="10" /></td>
 						<td>跟单人:</td>
-						<td><input type="text" size="10" /></td>
+						<td><s:textfield name="oqm.completer.realName" size="10" /></td>
 					</tr>
 				</table>
 			</div>
@@ -75,7 +77,7 @@
 			<div class="square-order">
 				<table width="100%" border="1" cellpadding="0" cellspacing="0">
 					<tr align="center"
-						style="background:url(../../../images/table_bg.gif) repeat-x;">
+						style="background:url(images/table_bg.gif) repeat-x;">
 						<td width="10%" height="30">订单类别</td>
 						<td width="13%">下单时间</td>
 						<td width="13%">制单人</td>
@@ -85,54 +87,34 @@
 						<td width="13%">发货方式</td>
 						<td width="10%">跟单人</td>
 					</tr>
+					<s:iterator value="orderList">
 						<tr align="center" bgcolor="#FFFFFF">
-							<td height="30">采购</td>
-							<td>2014-01-01</td>
-							<td>张三</td>
-							<td>2014-01-04</td>
-							<td>李四</td>
-							<td>七匹狼</td>
-							<td>自提</td>
+							<td height="30">${orderTypeView }</td>
+							<td>${createTimeView }</td>
+							<td>${creater.realName }</td>
+							<td>${checkTimeView }</td>
+							<td>${checker.realName }</td>
+							<td>${sm.sname }</td>
+							<td>${sm.patternView }</td>
 							<td>
-									<img src="../../../images/icon_3.gif" /> 
-									<span style="line-height:12px; text-align:center;"> 
-										<a href="assignTask.jsp" class="xiu">任务指派
-										</a> 
+								<s:if test="status==@cn.itcast.erp.invoce.order.vo.OrderModel@ORDER_STATUS_OF_BUY_PASS">
+									<img src="images/icon_3.gif" /> 
+									<span style="line-height:12px; text-align:center;">
+										<s:a action="order_assignTask.action" cssClass="xiu">
+											任务指派
+											<s:param name="om.uuid" value="uuid"/>
+										</s:a>
 									</span>
+								</s:if>
+								<s:else>
+									${completer.realName }
+								</s:else>
 							</td>
 						</tr>
-						<tr align="center" bgcolor="#FFFFFF">
-							<td height="30">采购</td>
-							<td>2014-01-01</td>
-							<td>张三</td>
-							<td>2014-01-04</td>
-							<td>李四</td>
-							<td>七匹狼</td>
-							<td>自提</td>
-							<td>
-									张送货
-							</td>
-						</tr>
-						<tr align="center" bgcolor="#FFFFFF">
-							<td height="30">采购</td>
-							<td>2014-01-01</td>
-							<td>张三</td>
-							<td>2014-01-04</td>
-							<td>李四</td>
-							<td>七匹狼</td>
-							<td>自提</td>
-							<td>
-									<img src="../../../images/icon_3.gif" /> 
-									<span style="line-height:12px; text-align:center;"> 
-										<s:a action="transportAction_toTask" cssClass="xiu">任务指派
-											<s:param name="om.uuid" value="uuid" />
-										</s:a> 
-									</span>
-							</td>
-						</tr>
+					</s:iterator>
 				</table>
 			</div>
-		</form>
+		</s:form>
 	</div>
 	<div class="content-bbg"></div>
 </div>

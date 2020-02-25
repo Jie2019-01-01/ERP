@@ -3,15 +3,17 @@ package cn.itcast.erp.invoce.order.business.ebo;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import org.springframework.transaction.annotation.Transactional;
+
 import cn.itcast.erp.auth.emp.vo.EmpModel;
+import cn.itcast.erp.exception.AppException;
 import cn.itcast.erp.invoce.goods.vo.GoodsModel;
 import cn.itcast.erp.invoce.order.business.ebi.OrderEbi;
 import cn.itcast.erp.invoce.order.dao.dao.OrderDao;
 import cn.itcast.erp.invoce.order.vo.OrderModel;
 import cn.itcast.erp.invoce.order.vo.OrderQueryModel;
 import cn.itcast.erp.invoce.orderdetail.vo.OrderDetailModel;
-import cn.itcast.erp.invoce.supplier.vo.SupplierModel;
 import cn.itcast.erp.utils.base.BaseQueryModel;
 import cn.itcast.erp.utils.generator.OrderNumUtil;
 
@@ -100,6 +102,64 @@ public class OrderEbo implements OrderEbi {
 
 	public List<OrderModel> inList(OrderQueryModel oqm, Integer curPage, Integer pageCount) {
 		return orderDao.list(oqm, curPage, pageCount);
+	}
+
+	public void inCheckPass(Long uuid, EmpModel checker) {
+		OrderModel om = orderDao.getByUuid(uuid);
+		// 逻辑校验
+		if(om.getStatus()!=OrderModel.ORDER_STATUS_OF_BUY_NO_CHECK) {
+			throw new AppException("悟空，不要调皮....");
+		}
+		// 订单状态: 未审核==》通过
+		om.setStatus(OrderModel.ORDER_STATUS_OF_BUY_PASS);
+		// 审核人
+		om.setChecker(checker);
+		// 审核时间
+		om.setCheckTime(System.currentTimeMillis());
+	}
+
+	public void inCheckNoPass(Long uuid, EmpModel checker) {
+		OrderModel om = orderDao.getByUuid(uuid);
+		// 逻辑校验
+		if(om.getStatus()!=OrderModel.ORDER_STATUS_OF_BUY_NO_CHECK) {
+			throw new AppException("悟空，不要调皮....");
+		}
+		// 订单状态: 未审核==》驳回
+		om.setStatus(OrderModel.ORDER_STATUS_OF_BUY_NO_PASS);
+		// 审核人
+		om.setChecker(checker);
+		// 审核时间
+		om.setCheckTime(System.currentTimeMillis());
+	}
+
+	// 运输任务中应显示的订单状态
+	private Integer[] statuses = {
+		OrderModel.ORDER_STATUS_OF_BUY_PASS,
+		OrderModel.ORDER_STATUS_OF_BUY_BUYING,
+		OrderModel.ORDER_STATUS_OF_BUY_IN_STORE,
+		OrderModel.ORDER_STATUS_OF_BUY_COMPLETE,
+		
+		OrderModel.ORDER_STATUS_OF_SALE_PASS
+		};
+	public Integer getTaskCount(OrderQueryModel oqm) {
+		return orderDao.getTaskCount(oqm, statuses);
+	}
+
+	public List<OrderModel> getTaskList(OrderQueryModel oqm, Integer curPage, 
+			Integer pageCount) {
+		return orderDao.getTaskList(oqm, curPage, pageCount, statuses);
+	}
+
+	public void assignTaskMan(Long uuid, EmpModel completer) {
+		OrderModel om = orderDao.getByUuid(uuid);
+		// 逻辑校验
+		if(om.getStatus()!=OrderModel.ORDER_STATUS_OF_BUY_PASS) {
+			throw new AppException("悟空，你又调皮了，为师要念咒语了。。。");
+		}
+		// 跟单人==》前台指定
+		om.setCompleter(completer);
+		// 订单状态
+		om.setStatus(OrderModel.ORDER_STATUS_OF_BUY_BUYING);
 	}
 
 }

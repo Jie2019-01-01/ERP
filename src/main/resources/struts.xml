@@ -82,6 +82,13 @@
     		<result name="inDetailList">/WEB-INF/jsps/order/in/inDetailList.jsp</result>
     		<result name="inInput">/WEB-INF/jsps/order/in/input.jsp</result>
     		<result name="toInList" type="redirectAction">order_inList</result>
+    		<result name="inCheckList">/WEB-INF/jsps/order/in/inCheckList.jsp</result>
+    		<result name="inCheck">/WEB-INF/jsps/order/in/inCheck.jsp</result>
+    		<result name="inCheckPass" type="redirectAction">order_inCheckList</result>
+    		<result name="inCheckNoPass" type="redirectAction">order_inCheckList</result>
+    		<result name="taskList">/WEB-INF/jsps/order/transport/list.jsp</result>
+    		<result name="assignTask">/WEB-INF/jsps/order/transport/assignTask.jsp</result>
+    		<result name="assignTaskMan" type="redirectAction">order_taskList</result>
     		<result name="ajaxGetGtmBySm" type="json">
     			<param name="includeProperties">
 			        gtmList\[\d+\]\.uuid,

@@ -87,10 +87,12 @@ public class OrderModel {
 	private Integer orderType;
 	private Integer status;
 	private Long createTime;
+	private Long checkTime;
 	private String totalPriceView;
 	private String orderTypeView;
 	private String statusView;
 	private String createTimeView;
+	private String checkTimeView;
 	
 	private EmpModel creater;
 	private EmpModel checker;
@@ -98,6 +100,22 @@ public class OrderModel {
 	private SupplierModel sm;
 	private	Set<OrderDetailModel> odms;
 	
+	
+	
+	public Long getCheckTime() {
+		return checkTime;
+	}
+
+	public void setCheckTime(Long checkTime) {
+		this.checkTime = checkTime;
+		if (checkTime!=null)
+				this.checkTimeView = FormatUtil.formatDate(checkTime);
+	}
+
+	public String getCheckTimeView() {
+		return checkTimeView;
+	}
+
 	public Integer getOrderType() {
 		return orderType;
 	}

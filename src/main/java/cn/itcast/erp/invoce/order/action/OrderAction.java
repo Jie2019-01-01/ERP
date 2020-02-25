@@ -2,6 +2,9 @@ package cn.itcast.erp.invoce.order.action;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.itcast.erp.auth.emp.business.ebi.EmpEbi;
+import cn.itcast.erp.auth.emp.vo.EmpModel;
 import cn.itcast.erp.invoce.goods.business.ebi.GoodsEbi;
 import cn.itcast.erp.invoce.goods.vo.GoodsModel;
 import cn.itcast.erp.invoce.goodstype.business.ebi.GoodsTypeEbi;
@@ -23,6 +26,8 @@ public class OrderAction extends BaseAction{
 	public void setGoodsTypeEbi(GoodsTypeEbi goodsTypeEbi) {this.goodsTypeEbi = goodsTypeEbi;}
 	private GoodsEbi goodsEbi;
 	public void setGoodsEbi(GoodsEbi goodsEbi) {this.goodsEbi = goodsEbi;}
+	private EmpEbi empEbi;
+	public void setEmpEbi(EmpEbi empEbi) {this.empEbi = empEbi;}
 
 	public OrderModel om = new OrderModel();
 	public OrderQueryModel oqm = new OrderQueryModel();
@@ -43,9 +48,6 @@ public class OrderAction extends BaseAction{
 	}
 
 	public String inInput() {
-//		if(om.getUuid()!=null) {
-//			om = orderEbi.getByUuid(om.getUuid());
-//		}
 		List<SupplierModel> supplierList = supplierEbi.getNotNullAndGtm();
 		put("supplierList", supplierList);
 		List<GoodsTypeModel> gtmList = goodsTypeEbi.getNotNullBySupplier(supplierList.get(0).getUuid());
@@ -53,6 +55,32 @@ public class OrderAction extends BaseAction{
 		List<GoodsModel> gmList = goodsEbi.getByGtm(gtmList.get(0).getUuid());
 		put("gmList", gmList);
 		return "inInput";
+	}
+	
+	// 采购审核列表
+	public String inCheckList() {
+		oqm.setOrderType(OrderModel.ORDER_ORDERTYPE_OF_BUY);
+		Integer rescords = orderEbi.getCount(oqm);
+		setRecords(rescords);
+		// 获取所有采购订单
+		List<OrderModel> orderList = orderEbi.inList(oqm, curPage, pageCount);
+		put("orderList", orderList);
+		return "inCheckList";
+	}
+	// 采购审核操作界面
+	public String inCheck() {
+		om = orderEbi.getByUuid(om.getUuid());
+		return "inCheck";
+	}
+	// 审核通过
+	public String inCheckPass() {
+		orderEbi.inCheckPass(om.getUuid(), getLoginEm());
+		return "inCheckPass";
+	}
+	// 审核未通过
+	public String inCheckNoPass() {
+		orderEbi.inCheckNoPass(om.getUuid(), getLoginEm());
+		return "inCheckNoPass";
 	}
 
 	public Long[] goodsUuids;
@@ -67,6 +95,47 @@ public class OrderAction extends BaseAction{
 		orderEbi.delete(om);
 		return "toList";
 	}
+	
+	//------------------运输任务-------------------------
+	public String taskList() {
+		Integer records = orderEbi.getTaskCount(oqm);
+		setRecords(records);
+		List<OrderModel> orderList = orderEbi.getTaskList(oqm, curPage, pageCount);
+		put("orderList", orderList);
+		// 供应商列表
+		List<SupplierModel> suppliserList = supplierEbi.list();
+		put("suppliserList", suppliserList);
+		return "taskList";
+	}
+	
+	// 任务指派操作页面
+	public String assignTask() {
+		// 根据uuid查询订单
+		om = orderEbi.getByUuid(om.getUuid());
+		// 查询运输部门的人员
+		List<EmpModel> empList = empEbi.getByDep(getLoginEm().getDm().getUuid());
+		put("empList", empList);
+		return "assignTask";
+	}
+	// 指派任务人
+	public Long completerUuid;
+	public String assignTaskMan() {
+		// 获取跟单人
+		EmpModel em = empEbi.getByUuid(completerUuid);
+		orderEbi.assignTaskMan(om.getUuid(), em);
+		return "assignTaskMan";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	// -------------ajax--------------------
 	public Long supplierUuid;

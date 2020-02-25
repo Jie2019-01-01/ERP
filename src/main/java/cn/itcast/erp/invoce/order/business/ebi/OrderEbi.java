@@ -28,4 +28,40 @@ public interface OrderEbi extends BaseEbi<OrderModel>{
 	 */
 	public List<OrderModel> inList(OrderQueryModel oqm, Integer curPage, Integer pageCount);
 
+	/**
+	 * 审核通过
+	 * @param uuid 订单uuid
+	 * @param checker 审核人
+	 */
+	public void inCheckPass(Long uuid, EmpModel checker);
+	/**
+	 * 审核未通过
+	 * @param uuid 订单uuid
+	 * @param checker 审核人
+	 */
+	public void inCheckNoPass(Long uuid, EmpModel checker);
+
+	/**
+	 * 获取运输任务总数
+	 * @param oqm	条件模型
+	 * @return
+	 */
+	public Integer getTaskCount(OrderQueryModel oqm);
+
+	/**
+	 * 获取运输任务列表
+	 * @param oqm 条件模型
+	 * @param curPage
+	 * @param pageCount
+	 * @return
+	 */
+	public List<OrderModel> getTaskList(OrderQueryModel oqm, Integer curPage, Integer pageCount);
+
+	/**
+	 * 指派任务人
+	 * @param uuid 订单uuid
+	 * @param completer
+	 */
+	public void assignTaskMan(Long uuid, EmpModel completer);
+
 }

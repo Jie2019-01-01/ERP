@@ -50,4 +50,9 @@ public class EmpImpl extends BaseImpl<EmpModel> implements EmpDao {
 			dc.add(Restrictions.le("birth", eqm.getMaxBirth()));
 		}
 	}
+
+	public List<EmpModel> getByDep(Long depUuid) {
+		String hql = "from EmpModel where dm.uuid=?";
+		return this.getHibernateTemplate().find(hql, depUuid);
+	}
 }

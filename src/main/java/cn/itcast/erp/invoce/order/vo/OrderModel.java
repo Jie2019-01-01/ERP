@@ -3,6 +3,7 @@ package cn.itcast.erp.invoce.order.vo;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import cn.itcast.erp.auth.emp.vo.EmpModel;
 import cn.itcast.erp.invoce.orderdetail.vo.OrderDetailModel;
@@ -21,7 +22,7 @@ public class OrderModel {
 	public static final String ORDER_ORDERTYPE_OF_SALE_VIEW = "销售";
 	public static final String ORDER_ORDERTYPE_OF_RETURN_BUY_VIEW = "采购退货";
 	public static final String ORDER_ORDERTYPE_OF_RETURN_SALE_VIEW = "销售退货";
-	
+
 	public static final Map<Integer, String> orderTypeMap = new HashMap<Integer, String>();
 	static {
 		orderTypeMap.put(ORDER_ORDERTYPE_OF_BUY, ORDER_ORDERTYPE_OF_BUY_VIEW);
@@ -57,17 +58,22 @@ public class OrderModel {
 	public static final String ORDER_STATUS_OF_SALE_NO_CHECK_VIEW = "未审核";
 	public static final String ORDER_STATUS_OF_SALE_PASS_VIEW = "通过";
 	
+	public static final Map<Integer, String> buyMap = new TreeMap<Integer, String>();
+	public static final Map<Integer, String> saleMap = new TreeMap<Integer, String>();
 	public static final Map<Integer, String> statusMap = new HashMap<Integer, String>();
 	static {
-		statusMap.put(ORDER_STATUS_OF_BUY_NO_CHECK, ORDER_STATUS_OF_BUY_NO_CHECK_VIEW);
-		statusMap.put(ORDER_STATUS_OF_BUY_PASS, ORDER_STATUS_OF_BUY_PASS_VIEW);
-		statusMap.put(ORDER_STATUS_OF_BUY_NO_PASS, ORDER_STATUS_OF_BUY_NO_PASS_VIEW);
-		statusMap.put(ORDER_STATUS_OF_BUY_BUYING, ORDER_STATUS_OF_BUY_BUYING_VIEW);
-		statusMap.put(ORDER_STATUS_OF_BUY_IN_STORE, ORDER_STATUS_OF_BUY_IN_STORE_VIEW);
-		statusMap.put(ORDER_STATUS_OF_BUY_COMPLETE, ORDER_STATUS_OF_BUY_COMPLETE_VIEW);
+		buyMap.put(ORDER_STATUS_OF_BUY_NO_CHECK, ORDER_STATUS_OF_BUY_NO_CHECK_VIEW);
+		buyMap.put(ORDER_STATUS_OF_BUY_PASS, ORDER_STATUS_OF_BUY_PASS_VIEW);
+		buyMap.put(ORDER_STATUS_OF_BUY_NO_PASS, ORDER_STATUS_OF_BUY_NO_PASS_VIEW);
+		buyMap.put(ORDER_STATUS_OF_BUY_BUYING, ORDER_STATUS_OF_BUY_BUYING_VIEW);
+		buyMap.put(ORDER_STATUS_OF_BUY_IN_STORE, ORDER_STATUS_OF_BUY_IN_STORE_VIEW);
+		buyMap.put(ORDER_STATUS_OF_BUY_COMPLETE, ORDER_STATUS_OF_BUY_COMPLETE_VIEW);
 		
-		statusMap.put(ORDER_STATUS_OF_SALE_NO_CHECK, ORDER_STATUS_OF_SALE_NO_CHECK_VIEW);
-		statusMap.put(ORDER_STATUS_OF_SALE_PASS, ORDER_STATUS_OF_SALE_PASS_VIEW);
+		saleMap.put(ORDER_STATUS_OF_SALE_NO_CHECK, ORDER_STATUS_OF_SALE_NO_CHECK_VIEW);
+		saleMap.put(ORDER_STATUS_OF_SALE_PASS, ORDER_STATUS_OF_SALE_PASS_VIEW);
+		
+		statusMap.putAll(buyMap);
+		statusMap.putAll(saleMap);
 	}
 	
 	//-----------------------------

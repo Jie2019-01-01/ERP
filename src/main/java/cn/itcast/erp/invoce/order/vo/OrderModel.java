@@ -88,11 +88,13 @@ public class OrderModel {
 	private Integer status;
 	private Long createTime;
 	private Long checkTime;
+	private Long endTime;
 	private String totalPriceView;
 	private String orderTypeView;
 	private String statusView;
 	private String createTimeView;
 	private String checkTimeView;
+	private String endTimeView;
 	
 	private EmpModel creater;
 	private EmpModel checker;
@@ -147,6 +149,20 @@ public class OrderModel {
 
 	public void setUuid(Long uuid) {
 		this.uuid = uuid;
+	}
+
+	public Long getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Long endTime) {
+		this.endTime = endTime;
+		if(endTime!=null)
+			this.endTimeView = FormatUtil.formatDate(endTime);
+	}
+
+	public String getEndTimeView() {
+		return endTimeView;
 	}
 
 	public String getOrderNum() {

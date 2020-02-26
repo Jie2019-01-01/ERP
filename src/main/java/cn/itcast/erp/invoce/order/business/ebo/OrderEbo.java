@@ -220,6 +220,12 @@ public class OrderEbo implements OrderEbi {
 		StoreModel sm = new StoreModel();
 		//1.订单明细中“剩余数量”更新
 		OrderDetailModel odm = orderDetailDao.getByUuid(odmUuid);
+		// 获取“订单明细”对应的“订单”
+		OrderModel om = odm.getOm();
+		if(!om.getStatus().equals(OrderModel.ORDER_STATUS_OF_BUY_IN_STORE)) {
+			throw new AppException("悟空，别再调皮了，为师要生气了哦。");
+		}
+		
 		if(inNum>odm.getSurplus()) {
 			throw new AppException("悟空，不要调皮了。");
 		}
@@ -251,6 +257,20 @@ public class OrderEbo implements OrderEbi {
 		oper.setSm(sm);
 		oper.setType(OperDetailModel.OPER_DETAIL_TYPE_OF_IN);
 		operDetailDao.save(oper);
+		
+		// 入库
+		Set<OrderDetailModel> odms = om.getOdms();
+		// 将该订单下所有的明细相加
+		int sum = 0;
+		for(OrderDetailModel odmodel: odms) {
+			sum += odmodel.getSurplus();
+		}
+		// 如果为0，该订单入库完成，修改状态和结束时间
+		// 如果不为0，不用管
+		if(sum==0) {
+			om.setStatus(OrderModel.ORDER_STATUS_OF_BUY_COMPLETE);
+			om.setEndTime(System.currentTimeMillis());
+		}
 		
 		return odm;
 	}

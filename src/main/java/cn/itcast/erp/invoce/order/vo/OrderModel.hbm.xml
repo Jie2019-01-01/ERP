@@ -14,6 +14,7 @@
 		<property name="status"/>
 		<property name="createTime"/>
 		<property name="checkTime"/>
+		<property name="endTime"/>
 		
 		<many-to-one name="creater" column="creater" class="cn.itcast.erp.auth.emp.vo.EmpModel"/>
 		<many-to-one name="checker" column="checker" class="cn.itcast.erp.auth.emp.vo.EmpModel"/>

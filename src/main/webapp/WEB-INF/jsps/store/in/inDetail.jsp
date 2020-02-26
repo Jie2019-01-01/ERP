@@ -50,7 +50,8 @@
 		});
 		
 		$('.ajaxIn').live('click', function(){
-			$tr = $(this).parent().parent().prev();
+			$nowTr = $(this).parent().parent();
+			$tr = $nowTr.prev();
 			// 哪个仓库？
 			// 入库数量是多少？
 			// 什么时间入的？
@@ -61,8 +62,24 @@
 			jsonParam['inNum'] = $('#inNum').val();
 			jsonParam['storeUuid'] = $('.store').val();
 			$.post('order_inStore.action', jsonParam, function(data){
+				// 入库之后"只有一条数据"且"剩余数量"等于0
+				if($('[aa=bb]').length==1 && data.surplus==0){
+					$('#allInTitle').show();
+					$('#return').show();
+					
+					$('#inOrderTitle').hide();
+					$('#inOrder').hide();
+				}
+				
 				$tr.children('td:eq(2)').html(data.buyCount-data.surplus);
 				$tr.children('td:eq(3)').html(data.surplus);
+				$nowTr.children('td:eq(3)').children('input').val(data.surplus);
+				
+				// 入库之后“剩余数量”等于0时，删除该行数据
+				if(data.surplus==0){
+					$tr.remove();
+					$nowTr.remove();
+				}
 			});
 		});
 	});
@@ -99,15 +116,17 @@
 						<td width="10%">入库</td>
 					</tr>
 					<s:iterator value="om.odms">
-						<tr aa="bb" align="center" bgcolor="#FFFFFF">
-							<input type="hidden" value=1/>
-							<input type="hidden" value=2/>
-							<td height="30">${gm.gname }</td>
-							<td>${buyCount }</td>
-							<td>${buyCount-surplus }</td>
-							<td>${surplus }</td>
-							<td><a val="${uuid }" href="javascript:void(0)" class="oper xiu"><img src="images/icon_3.gif" />入库</a></td>
-						</tr>
+						<s:if test="surplus>0">
+							<tr aa="bb" align="center" bgcolor="#FFFFFF">
+								<input type="hidden" value=1/>
+								<input type="hidden" value=2/>
+								<td height="30">${gm.gname }</td>
+								<td>${buyCount }</td>
+								<td>${buyCount-surplus }</td>
+								<td>${surplus }</td>
+								<td><a val="${uuid }" href="javascript:void(0)" class="oper xiu"><img src="images/icon_3.gif" />入库</a></td>
+							</tr>
+						</s:if>
 					</s:iterator>
 				</table>
 				
@@ -116,7 +135,7 @@
 					<tr>
 						<td>&nbsp;</td>
 						<td width="100%" align="center">
-							<a action="list.jsp" style="color:#f00;font-size:20px;padding-top:2px;font-weight:bold;text-decoration:none;width:82px;height:28px;display:block;background:url(images/btn_bg.jpg)">
+							<a href="order_storeInList.action" style="color:#f00;font-size:20px;padding-top:2px;font-weight:bold;text-decoration:none;width:82px;height:28px;display:block;background:url(images/btn_bg.jpg)">
 								返回
 							</a>
 						</td>

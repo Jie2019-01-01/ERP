@@ -12,6 +12,9 @@ import cn.itcast.erp.invoce.goodstype.vo.GoodsTypeModel;
 import cn.itcast.erp.invoce.order.business.ebi.OrderEbi;
 import cn.itcast.erp.invoce.order.vo.OrderModel;
 import cn.itcast.erp.invoce.order.vo.OrderQueryModel;
+import cn.itcast.erp.invoce.orderdetail.vo.OrderDetailModel;
+import cn.itcast.erp.invoce.store.business.ebi.StoreEbi;
+import cn.itcast.erp.invoce.store.vo.StoreModel;
 import cn.itcast.erp.invoce.supplier.business.ebi.SupplierEbi;
 import cn.itcast.erp.invoce.supplier.vo.SupplierModel;
 import cn.itcast.erp.utils.base.BaseAction;
@@ -28,6 +31,8 @@ public class OrderAction extends BaseAction{
 	public void setGoodsEbi(GoodsEbi goodsEbi) {this.goodsEbi = goodsEbi;}
 	private EmpEbi empEbi;
 	public void setEmpEbi(EmpEbi empEbi) {this.empEbi = empEbi;}
+	private StoreEbi storeEbi;
+	public void setStoreEbi(StoreEbi storeEbi) {this.storeEbi = storeEbi;}
 
 	public OrderModel om = new OrderModel();
 	public OrderQueryModel oqm = new OrderQueryModel();
@@ -143,8 +148,32 @@ public class OrderAction extends BaseAction{
 		return "toQueryList";
 	}
 	
+	// ----------------仓库------------
+	public String storeInList() {
+		Integer records = orderEbi.inStoreCount(oqm);
+		setRecords(records);
+		List<OrderModel> orderList = orderEbi.inStoreList(oqm, curPage, pageCount);
+		put("orderList", orderList);
+		return "storeInList";
+	}
+	public String storeInDetail() {
+		om = orderEbi.inStoreDetail(om.getUuid());
+		// 加载所有仓库信息
+		List<StoreModel> storeList = storeEbi.list();
+		put("storeList", storeList);
+		return "storeInDetail";
+	}
+	// 入库
+	public Long odmUuid;
+	public Integer inNum;
+	public Long storeUuid;
 	
-	
+	private OrderDetailModel odm;
+	public OrderDetailModel getOdm() {return odm;}
+	public String inStore() {
+		odm = orderEbi.inGoods(odmUuid, inNum, storeUuid, getLoginEm());
+		return "inStore";
+	}
 	
 	
 	

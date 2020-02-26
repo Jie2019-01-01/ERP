@@ -13,7 +13,13 @@ import cn.itcast.erp.invoce.order.business.ebi.OrderEbi;
 import cn.itcast.erp.invoce.order.dao.dao.OrderDao;
 import cn.itcast.erp.invoce.order.vo.OrderModel;
 import cn.itcast.erp.invoce.order.vo.OrderQueryModel;
+import cn.itcast.erp.invoce.orderdetail.dao.dao.OrderDetailDao;
 import cn.itcast.erp.invoce.orderdetail.vo.OrderDetailModel;
+import cn.itcast.erp.invoce.store.vo.StoreModel;
+import cn.itcast.erp.invoce.storedetail.dao.dao.StoreDetailDao;
+import cn.itcast.erp.invoce.storedetail.vo.StoreDetailModel;
+import cn.itcast.erp.invoce.storeoper.dao.dao.OperDetailDao;
+import cn.itcast.erp.invoce.storeoper.vo.OperDetailModel;
 import cn.itcast.erp.utils.base.BaseQueryModel;
 import cn.itcast.erp.utils.generator.OrderNumUtil;
 
@@ -22,6 +28,12 @@ public class OrderEbo implements OrderEbi {
 
 	private OrderDao orderDao;
 	public void setOrderDao(OrderDao orderDao) {this.orderDao = orderDao;}
+	private OrderDetailDao orderDetailDao;
+	public void setOrderDetailDao(OrderDetailDao orderDetailDao) {this.orderDetailDao = orderDetailDao;}
+	private StoreDetailDao storeDetailDao;
+	public void setStoreDetailDao(StoreDetailDao storeDetailDao) {this.storeDetailDao = storeDetailDao;}
+	private OperDetailDao operDetailDao;
+	public void setOperDetailDao(OperDetailDao operDetailDao) {this.operDetailDao = operDetailDao;}
 
 	public List<OrderModel> list() {
 		return orderDao.list();
@@ -82,6 +94,8 @@ public class OrderEbo implements OrderEbi {
 			odm.setGm(gm);
 			// 数量
 			odm.setBuyCount(nums[i]);
+			// 剩余数量
+			odm.setSurplus(nums[i]);
 			// 单价
 			odm.setInPrice(prices[i]);
 			// 所属订单
@@ -181,5 +195,63 @@ public class OrderEbo implements OrderEbi {
 		}
 		// 订单状态==》“入库中”
 		om.setStatus(OrderModel.ORDER_STATUS_OF_BUY_IN_STORE);
+	}
+
+	public Integer inStoreCount(OrderQueryModel oqm) {
+		// 订单状态设置为“入库中”,
+		// 实际上这里应该是个数组，包含销售退货的入库
+		// 但这里简单起见，就设置一个
+		oqm.setStatus(OrderModel.ORDER_STATUS_OF_BUY_IN_STORE);
+		return orderDao.getCount(oqm);
+	}
+
+	public List<OrderModel> inStoreList(OrderQueryModel oqm, Integer curPage, Integer pageCount) {
+		oqm.setStatus(OrderModel.ORDER_STATUS_OF_BUY_IN_STORE);
+		return orderDao.list(oqm, curPage, pageCount);
+	}
+
+	public OrderModel inStoreDetail(Long uuid) {
+		return orderDao.getByUuid(uuid);
+	}
+
+	public OrderDetailModel inGoods(Long odmUuid, Integer inNum, Long storeUuid, EmpModel inStoreMan) {
+		// 入库
+		GoodsModel gm = new GoodsModel();
+		StoreModel sm = new StoreModel();
+		//1.订单明细中“剩余数量”更新
+		OrderDetailModel odm = orderDetailDao.getByUuid(odmUuid);
+		if(inNum>odm.getSurplus()) {
+			throw new AppException("悟空，不要调皮了。");
+		}
+		// 快照
+		odm.setSurplus(odm.getSurplus()-inNum);
+		//2.库存数量变化
+		StoreDetailModel sdm = storeDetailDao.getBySmAndGm(storeUuid, odm.getGm().getUuid());
+		// 商品
+		gm.setUuid(odm.getGm().getUuid());
+		// 仓库
+		sm.setUuid(storeUuid);
+		if(sdm!=null) {
+			// 快照
+			sdm.setNum(sdm.getNum()+inNum);
+		}else {
+			sdm = new StoreDetailModel();
+			sdm.setGm(gm);
+			sdm.setSm(sm);
+			// 入库数量
+			sdm.setNum(inNum);
+			storeDetailDao.save(sdm);
+		}
+		//3.记录日志
+		OperDetailModel oper = new OperDetailModel();
+		oper.setEm(inStoreMan);
+		oper.setGm(gm);
+		oper.setNum(inNum);
+		oper.setOperTime(System.currentTimeMillis());
+		oper.setSm(sm);
+		oper.setType(OperDetailModel.OPER_DETAIL_TYPE_OF_IN);
+		operDetailDao.save(oper);
+		
+		return odm;
 	}
 }

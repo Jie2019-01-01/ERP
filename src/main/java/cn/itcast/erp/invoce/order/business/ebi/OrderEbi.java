@@ -5,6 +5,7 @@ import java.util.List;
 import cn.itcast.erp.auth.emp.vo.EmpModel;
 import cn.itcast.erp.invoce.order.vo.OrderModel;
 import cn.itcast.erp.invoce.order.vo.OrderQueryModel;
+import cn.itcast.erp.invoce.orderdetail.vo.OrderDetailModel;
 import cn.itcast.erp.utils.base.BaseEbi;
 
 public interface OrderEbi extends BaseEbi<OrderModel>{
@@ -88,5 +89,37 @@ public interface OrderEbi extends BaseEbi<OrderModel>{
 	 * @param uuid 订单uuid
 	 */
 	public void endTask(Long uuid);
+
+	/**
+	 * 仓库管理>查询中显示的订单数
+	 * @param oqm
+	 * @return
+	 */
+	public Integer inStoreCount(OrderQueryModel oqm);
+
+	/**
+	 * 仓库管理>查询中显示的订单列表
+	 * @param oqm
+	 * @param curPage
+	 * @param pageCount
+	 * @return
+	 */
+	public List<OrderModel> inStoreList(OrderQueryModel oqm, Integer curPage, Integer pageCount);
+
+	/**
+	 * 入库订单明细
+	 * @param uuid
+	 * @return
+	 */
+	public OrderModel inStoreDetail(Long uuid);
+
+	/**
+	 * 入库
+	 * @param odmUuid 订单详情uuid，用来改变剩余数量
+	 * @param inNum	即将入库的数量
+	 * @param storeUuid 仓库uuid
+	 * @param inStoreMan 入库人
+	 */
+	public OrderDetailModel inGoods(Long odmUuid, Integer inNum, Long storeUuid, EmpModel inStoreMan);
 
 }

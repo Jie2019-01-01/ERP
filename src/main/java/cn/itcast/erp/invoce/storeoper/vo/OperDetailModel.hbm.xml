@@ -3,16 +3,18 @@
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-	<class name="cn.itcast.erp.invoce.orderdetail.vo.OrderDetailModel" table="tbl_orderDetail">
+	<class name="cn.itcast.erp.invoce.storeoper.vo.OperDetailModel" table="tbl_operDetail">
 		<id name="uuid">
 			<generator class="native"/>
 		</id>
 		
-		<property name="buyCount"/>
-		<property name="surplus"/>
-		<property name="inPrice"/>
+		<property name="num"/>
+		<property name="operTime"/>
+		<property name="type"/>
 		
-		<many-to-one name="om" column="orderUuid" class="cn.itcast.erp.invoce.order.vo.OrderModel"/>
+		<many-to-one name="em" column="empUuid" class="cn.itcast.erp.auth.emp.vo.EmpModel"/>
 		<many-to-one name="gm" column="goodsUuid" class="cn.itcast.erp.invoce.goods.vo.GoodsModel"/>
+		<many-to-one name="sm" column="storeUuid" class="cn.itcast.erp.invoce.store.vo.StoreModel"/>
+		
 	</class>
 </hibernate-mapping>

@@ -92,6 +92,8 @@
     		<result name="queryList">/WEB-INF/jsps/order/transport/queryList.jsp</result>
     		<result name="queryDetail">/WEB-INF/jsps/order/transport/queryDetail.jsp</result>
     		<result name="toQueryList" type="redirectAction">order_queryList</result>
+    		<result name="storeInList">/WEB-INF/jsps/store/in/list.jsp</result>
+    		<result name="storeInDetail">/WEB-INF/jsps/store/in/inDetail.jsp</result>
     		<result name="ajaxGetGtmBySm" type="json">
     			<param name="includeProperties">
 			        gtmList\[\d+\]\.uuid,
@@ -123,11 +125,33 @@
 			        gmList\[\d+\]\.inPriceView,
 			    </param>
     		</result>
+    		<result name="inStore" type="json">
+    			<param name="root">odm</param>
+    			<param name="includeProperties">
+			        buyCount, surplus,
+			    </param>
+    		</result>
     	</action>
     	
     		<!-- orderDetail -->
     	<action name="orderDetail_*" class="orderDetailAction" method="{1}">
     		<result name="inList">/WEB-INF/jsps/order/in/inDetailList.jsp</result>
+    		<result name="ajaxGetSurplueByOmUuid" type="json">
+    			<param name="root">om</param>
+    			<param name="includeProperties">surplus</param>
+    		</result>
+    	</action>
+    	
+    		<!-- store -->
+    	<action name="store_*" class="storeAction" method="{1}">
+    	</action>
+    	
+    		<!-- storeDetail -->
+    	<action name="storeDetail_*" class="storeDetailAction" method="{1}">
+    	</action>
+    	
+    		<!-- operDetail -->
+    	<action name="operDetail_*" class="operDetailAction" method="{1}">
     	</action>
     	
     </package>

@@ -9,6 +9,7 @@ public class OrderDetailModel {
 	private Long uuid;
 	
 	private Integer buyCount;
+	private Integer surplus;
 	
 	private Double inPrice;
 	private String inPriceView;
@@ -27,6 +28,12 @@ public class OrderDetailModel {
 	}
 	public void setBuyCount(Integer buyCount) {
 		this.buyCount = buyCount;
+	}
+	public Integer getSurplus() {
+		return surplus;
+	}
+	public void setSurplus(Integer surplus) {
+		this.surplus = surplus;
 	}
 	public Double getInPrice() {
 		return inPrice;

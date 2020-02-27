@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags"%>
-<link href="../../../css/index.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="../../../js/jquery-1.8.3.js"></script>
-<script type="text/javascript" src="../../../js/Calendar.js"></script>
+<link href="css/index.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.8.3.js"></script>
+<script type="text/javascript" src="js/Calendar.js"></script>
 <script type="text/javascript">
 	$(function() {
 		$("#query").click(function() {
@@ -108,7 +108,7 @@
 						<td width="190">
 							<input type="text" size="18" onfocus="c.showMoreDay=false;c.show(this);" />
 						<td ><a id="query"> <img
-								src="../../../images/can_b_01.gif" border="0" /> </a></td>
+								src="images/can_b_01.gif" border="0" /> </a></td>
 					</tr>
 					<tr>
 						<td height="30">&nbsp;</td>
@@ -128,7 +128,7 @@
 							<input type="text" size="18" onfocus="c.showMoreDay=false;c.show(this);" />
 						<td>
 							<a href="demo.xls">
-								<img src="../../../images/can_b_03.gif" border="0" />
+								<img src="images/can_b_03.gif" border="0" />
 							</a>
 					</tr>
 				</table>
